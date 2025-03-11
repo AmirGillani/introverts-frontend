@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 export default function MobileMenuBar() {
   return (
-    <div className="md:hidden flex justify-evenly items-center w-full mt-1 relative top-0 left-0 right-0 z-10 bg-white p-2 shadow">
+    <div className="md:hidden flex justify-evenly items-center w-full mt-1 fixed top-0 left-0 right-0 z-20 bg-white p-2 shadow">
       <Link to="/">
         <img src={home} alt="icon" className="w-6 h-6 cursor-pointer" />
       </Link>

@@ -10,7 +10,7 @@ function App() {
   return (
     <Router>
       <MobileMenuBar />
-      <div className="overflow-hidden p-2 text-black bg-background relative">
+      <div className="overflow-hidden p-2 text-black bg-background relative mt-12 md:mt-0">
         <div className="grid md:grid-cols-[18rem_auto_20rem] gap-1 relative">
           
           <ProfileSideBar />
