@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import cover from "../assets/img/cover.jpg";
 import profile from "../assets/img/profileImg.jpg";
+import { MdModeEdit } from "react-icons/md";
 
 export default function ProfileCard() {
 
@@ -41,7 +42,8 @@ export default function ProfileCard() {
       <div className="bg-card flex flex-col gap-0.5 justify-center items-center p-3 rounded-b-2xl ">
         <div className="mt-14 mb-6 flex flex-col justify-center items-center gap-0.5">
           <span className="font-black">Zendaya Mj</span>
-          <span>Senior UI/UX Designer</span>
+          <span>Senior UI/UX Designer <MdModeEdit className="md:hidden inline-block " /></span>
+          
         </div>
 
         <hr className="w-full text-hr font-extrabold" />
@@ -49,12 +51,12 @@ export default function ProfileCard() {
         <div className="flex gap-0.5 justify-between items-center w-full px-4">
           <div className="flex flex-col justify-center items-center">
             <span className="font-bold">6,890</span>
-            <span className="text-gray-400">Following</span>
+            <span className="text-gray-400">Followers</span>
           </div>
           <div className="border-l-2 border-hr h-14"></div>
           <div className="flex flex-col justify-center items-center">
             <span className="font-bold">1</span>
-            <span className="text-gray-400">Follower</span>
+            <span className="text-gray-400">Following</span>
           </div>
           {currentAddress === "/profile" && (
             <>
