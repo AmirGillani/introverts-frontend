@@ -4,7 +4,7 @@ import Post from "./Post";
 export default function NewsFeed() {
   return (
     <div className="w-[80%] relative z-10">
-      {Posts.map((post) => {
+      {Posts.map((post,index) => {
         return (
           <Post
             name={post.name}
@@ -12,6 +12,7 @@ export default function NewsFeed() {
             likes={post.likes}
             liked={post.liked}
             img={post.img}
+            key={index}
           />
         );
       })}

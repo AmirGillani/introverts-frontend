@@ -8,8 +8,8 @@ export default function FollowersCard() {
         Who Is Following You
       </span>
       <div className="w-full flex flex-col justify-evenly items-start mt-4 h-80">
-        {Followers.map((follower) => (
-          <div className="flex  justify-between w-80">
+        {Followers.map((follower,index) => (
+          <div className="flex  justify-between w-80" key={index}>
             <div className="flex w-full">
               <img
                 src={follower.imgUrl}

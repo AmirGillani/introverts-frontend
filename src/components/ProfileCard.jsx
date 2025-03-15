@@ -4,7 +4,7 @@ import cover from "../assets/img/cover.jpg";
 import profile from "../assets/img/profileImg.jpg";
 import { MdModeEdit } from "react-icons/md";
 
-export default function ProfileCard() {
+export default function ProfileCard({toggle}) {
 
 
   const [currentAddress, setCurrentAddress] = useState("/");
@@ -42,7 +42,7 @@ export default function ProfileCard() {
       <div className="bg-card flex flex-col gap-0.5 justify-center items-center p-3 rounded-b-2xl ">
         <div className="mt-14 mb-6 flex flex-col justify-center items-center gap-0.5">
           <span className="font-black">Zendaya Mj</span>
-          <span>Senior UI/UX Designer <MdModeEdit className="md:hidden inline-block " /></span>
+          <span>Senior UI/UX Designer <MdModeEdit className="md:hidden inline-block " onClick={()=>toggle()}/></span>
           
         </div>
 

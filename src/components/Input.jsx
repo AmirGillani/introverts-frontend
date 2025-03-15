@@ -5,12 +5,16 @@ import { FaVideo } from "react-icons/fa6";
 import { FaLocationDot } from "react-icons/fa6";
 import { SlCalender } from "react-icons/sl";
 import { MdCancel } from "react-icons/md";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export default function Input() {
   const [imgURL, setImgURL] = useState(null);
 
+  const [videoURL, setVideoURL] = useState(null);
+
   const imgRef = useRef(null);
+
+  const videoRef = useRef(null);
 
   function uploadImg(e) {
     const img = e.target.files[0];
@@ -22,13 +26,23 @@ export default function Input() {
     }
   }
 
+  function uploadVideo(e) {
+    const video = e.target.files[0];
+
+    if (video) {
+      const videoURL = URL.createObjectURL(video);
+
+      setVideoURL(videoURL);
+    }
+  }
+
   return (
     <>
       <div className="bg-white rounded-2xl p-3 flex w-[80%] justify-between relative z-10">
-        <Link to={'/profile'}>
-        <img src={Profile} alt="profile" className="w-12 h-12 rounded-full" />
+        <Link to={"/profile"}>
+          <img src={Profile} alt="profile" className="w-12 h-12 rounded-full" />
         </Link>
-        
+
         <div className="w-full px-2 flex flex-col">
           <input
             type="text"
@@ -46,7 +60,10 @@ export default function Input() {
               />
               <span className="text-green-700">Photo</span>
             </div>
-            <div className="flex justify-center items-center cursor-pointer">
+            <div
+              className="flex justify-center items-center cursor-pointer"
+              onClick={() => videoRef.current.click()}
+            >
               <FaVideo size={22} className="text-purple-700 mr-1" />
               <span className="text-purple-700">Video</span>
             </div>
@@ -71,14 +88,44 @@ export default function Input() {
               ref={imgRef}
               onChange={uploadImg}
             />
+
+            <input
+              type="file"
+              name="img-upload"
+              className="hidden"
+              ref={videoRef}
+              onChange={uploadVideo}
+            />
           </div>
         </div>
       </div>
 
       {imgURL && (
-        <div className="relative mt-6">
-          <MdCancel className="absolute top-1.5 left-1.5 text-white cursor-pointer" onClick={()=>setImgURL(null)} />
-          <img src={imgURL} className="object-cover w-full max-h-[20rem] rounded-2xl" />
+        <div className="relative mt-6 w-[80%]">
+          <MdCancel
+            className="absolute top-1.5 left-1.5 text-white cursor-pointer"
+            onClick={() => setImgURL(null)}
+          />
+          <img
+            src={imgURL}
+            className="object-cover w-full max-h-[20rem] rounded-2xl"
+          />
+        </div>
+      )}
+
+      {videoURL && (
+        <div className="relative mt-6 w-[80%]">
+          <MdCancel
+            className="absolute top-1.5 left-1.5 text-white cursor-pointer z-10"
+            onClick={() => setVideoURL(null)}
+          />
+          <video
+            src={videoURL}
+            className="object-cover w-full max-h-[20rem] rounded-2xl"
+            controls // If you want to give users controls like play, pause, etc.
+          >
+            Sorry, your browser does not support embedded videos.
+          </video>
         </div>
       )}
     </>

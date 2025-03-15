@@ -5,7 +5,7 @@ import FollowersCard from './FollowersCard'
 import MyProfile from './MyProfile'
 import { useLocation } from 'react-router-dom'
 
-export default function Profile() {
+export default function Profile({toggle}) {
 
   const [currentAddress, setCurrentAddress] = useState("/")
 
@@ -21,7 +21,7 @@ export default function Profile() {
     <div className='md:flex hidden flex-col justify-center items-center gap-3 overflow-hidden h-[130vh]'>
       <LogoSearch />
       {
-        currentAddress !== "/profile" ? <ProfileCard /> : <MyProfile />
+        currentAddress !== "/profile" ? <ProfileCard /> : <MyProfile toggle={toggle} />
       }
       
       <FollowersCard />
