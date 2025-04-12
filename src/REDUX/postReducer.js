@@ -6,8 +6,10 @@ export const postsReducer = createSlice({
   initialState: {
     status: "",
     error: "",
-    posts:[],
-    added:false
+    posts: [],
+    comments:[],
+    post: null,
+    added: false,
   },
 
   reducers: {
@@ -17,7 +19,7 @@ export const postsReducer = createSlice({
     postSuccess: (state, action) => {
       state.status = "succeed";
       state.message = action.payload.message;
-      state.added =true
+      state.added = true;
     },
     postFailure: (state, action) => {
       state.status = "failure";
@@ -42,6 +44,45 @@ export const postsReducer = createSlice({
       state.status = "failure";
       state.error = action.payload.message;
     },
+
+    commentRequest: (state) => {
+      state.status = "loading";
+    },
+    commentSuccess: (state, action) => {
+      state.status = "succeed";
+      state.message = action.payload.message;
+      state.post = action.payload.post;
+      state.added=true;
+    },
+    commentFailure: (state, action) => {
+      state.status = "failure";
+      state.error = action.payload.message;
+    },
+
+    replyRequest: (state) => {
+      state.status = "loading";
+    },
+    replySuccess: (state, action) => {
+      state.status = "succeed";
+      state.message = action.payload.message;
+
+    },
+    replyFailure: (state, action) => {
+      state.status = "failure";
+      state.error = action.payload.message;
+    },
+
+    allCommentsRequest: (state) => {
+      state.status = "loading";
+    },
+    allCommentsSuccess: (state, action) => {
+      state.status = "succeed";
+      state.comments = action.payload.comments;
+    },
+    allCommentsFailure: (state, action) => {
+      state.status = "failure";
+      state.error = action.payload.message;
+    },
   },
 });
 
@@ -54,6 +95,15 @@ export const {
   timelinePostFailure,
   likePostSuccess,
   likePostFailure,
+  commentRequest,
+  commentSuccess,
+  commentFailure,
+  replyRequest,
+  replySuccess,
+  replyFailure,
+  allCommentsRequest,
+  allCommentsSuccess,
+  allCommentsFailure,
 } = postsReducer.actions;
 
 export default postsReducer.reducer;
@@ -104,11 +154,10 @@ export const timelinePosts = (token) => async (dispatch) => {
   }
 };
 
-export const likePost = (id,token) => async (dispatch) => {
-
+export const likePost = (id, token) => async (dispatch) => {
   try {
     const response = await fetch(`http://localhost:5000/posts/likePost/${id}`, {
-      method:"PUT",
+      method: "PUT",
       headers: {
         authorization: `Bearer ${token}`,
       },
@@ -123,5 +172,101 @@ export const likePost = (id,token) => async (dispatch) => {
     }
   } catch (error) {
     dispatch(likePostFailure(error.message));
+  }
+};
+
+export const sendComment = (data, id, token) => async (dispatch) => {
+  dispatch(commentRequest());
+
+  try {
+    const response = await fetch(
+      `http://localhost:5000/posts/sendComment/${id}`,
+      {
+        method: "PUT",
+        body: JSON.stringify(data),
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    const responseData = await response.json();
+
+    if (!response.ok) {
+      dispatch(commentFailure({ message: responseData.message }));
+    } else {
+      dispatch(
+        commentSuccess({
+          message: responseData.message,
+          post: responseData.post,
+        })
+      );
+    }
+  } catch (error) {
+    dispatch(commentFailure(error.message));
+  }
+};
+
+export const sendReply = (commentID, postID, token,text) => async (dispatch) => {
+
+  dispatch(replyRequest());
+
+  try {
+    const response = await fetch(
+      `http://localhost:5000/posts/sendReply/${postID}`,
+      {
+        method: "PUT",
+        body: JSON.stringify({text:text,commentID:commentID}),
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    const responseData = await response.json();
+
+    if (!response.ok) {
+      dispatch(replyFailure({ message: responseData.message }));
+    } else {
+      dispatch(
+        replySuccess({
+          message: responseData.message,
+          post: responseData.post,
+        })
+      );
+    }
+  } catch (error) {
+    dispatch(replyFailure(error.message));
+  }
+};
+
+export const allComments = (id, token) => async (dispatch) => {
+  dispatch(allCommentsRequest());
+
+  try {
+    const response = await fetch(
+      `http://localhost:5000/posts/allComments/${id}`,
+      {
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    const responseData = await response.json();
+
+    if (!response.ok) {
+      dispatch(allCommentsFailure({ message: responseData.message }));
+    } else {
+      dispatch(
+        allCommentsSuccess({
+          comments: responseData.comments,
+        })
+      );
+    }
+  } catch (error) {
+    dispatch(allCommentsFailure(error.message));
   }
 };

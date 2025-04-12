@@ -18,7 +18,7 @@ export default function Profile({toggle}) {
 
 
   return (
-    <div className='md:flex hidden flex-col justify-center items-center gap-3 overflow-hidden h-[130vh]'>
+    <div className='md:flex hidden flex-col justify-center items-center gap-3 overflow-hidden h-screen'>
       <LogoSearch />
       {
         currentAddress !== "/profile" ? <ProfileCard /> : <MyProfile toggle={toggle} />

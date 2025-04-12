@@ -15,6 +15,8 @@ export default function Signup({ toggle }) {
 
   const [confirm, setConfirm] = useState(false);
 
+  const [img,setImg]= useState(null);
+
   const { validationErrors } = useSelector((state) => state.auth);
 
   const handleChange = (e) => {
@@ -27,11 +29,28 @@ export default function Signup({ toggle }) {
     });
   };
 
+  const uploadFile =(e)=>{
+    setImg(e.target.files[0])
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    const newFormData = new FormData();
+
+    newFormData.append("firstName",formData.firstName);
+
+    newFormData.append("lastName",formData.lastName);
+
+    newFormData.append("password",formData.password);
+
+    newFormData.append("username",formData.username);
+
+    newFormData.append("profilePic",img);
+
+
     if (formData.password !== formData.confirmPassword) setConfirm(true);
-    else dispatch(signup(formData));
+    else dispatch(signup(newFormData));
   };
 
   const getErrorMessage = (fieldName) => {
@@ -125,6 +144,23 @@ export default function Signup({ toggle }) {
               Password and Confirm Pssword did'nt match
             </span>
           )}
+
+          <div className="flex w-full md:flex-row flex-col gap-3">
+            <div className="w-full">
+              <input
+                type="file"
+                className="bg-input-color w-full p-2.5 rounded-lg outline-none"
+                placeholder="Password"
+                onChange={uploadFile}
+                name="password"
+                required
+              />
+            </div>
+
+         
+          </div>
+
+         
 
           <span
             className="text-black my-3 md:text-sm text-xs self-center"

@@ -70,6 +70,9 @@ export default function Signup({ toggle }) {
             </span>
           )}
           </div>
+          
+
+
           <span className="text-black my-3 md:text-sm text-xs self-center" onClick={() => toggle()}>
           Don't Have A Account ?{" "}
           <span className="cursor-pointer hover:underline hover:text-blue-600">

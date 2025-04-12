@@ -39,7 +39,7 @@ export default function Post({ name, description, user,likes, img, id,token }) {
   }
 
   return (
-    <div className="w-full flex flex-col gap-2 my-3 bg-card p-3 rounded-2xl relative">
+    <div className="w-full h-auto flex flex-col gap-2 my-3 bg-card p-3 rounded-2xl relative">
       <img
         src={img}
         alt="post"
@@ -65,7 +65,7 @@ export default function Post({ name, description, user,likes, img, id,token }) {
 
       {isOpen ? (
         <>
-          <CommentsBlock />
+          <CommentsBlock id={id}/>
         </>
       ) : (
         <div className="flex flex-col">

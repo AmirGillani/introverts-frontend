@@ -31,7 +31,7 @@ export default function ProfileCard({ toggle }) {
   return (
     <Link
       to={"/profile"}
-      className={`${currentAddress === "/profile" ? "w-[80%]" : "w-[100%]"}`}
+      className={`${currentAddress === "/profile" ? "w-[80%]" : "w-[100%]"} h-[60%] overflow-hidden`}
     >
       <div
         className={`rounded-3xl overflow-clip relative z-10 cursor-pointer ${

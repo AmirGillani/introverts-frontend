@@ -15,7 +15,7 @@ export default function MyProfile({toggle}) {
   }
 
   return (
-    <div className="w-full">
+    <div className="w-full h-[60%]">
     
       
       <div className="rounded-2xl bg-card flex flex-col gap-7 py-6 px-6 w-full h-80 z-10 relative">

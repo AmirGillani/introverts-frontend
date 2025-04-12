@@ -185,10 +185,7 @@ export const signup = (data) => async (dispatch) => {
   try {
     const response = await fetch(`http://localhost:5000/auth/signup`, {
       method: "POST",
-      body: JSON.stringify(data),
-      headers: {
-        "Content-Type": "application/json",
-      },
+      body: data
     });
 
     const responseData = await response.json();

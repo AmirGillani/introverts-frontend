@@ -5,7 +5,7 @@ import {Link} from "react-router-dom";
 
 export default function LogoSearch() {
   return (
-    <div className="flex gap-1 justify-center items-center">
+    <div className="flex gap-1 justify-center items-center h-[10%]">
       <Link to={"/"}>
       <img src={Logo} alt="logo" />
       </Link>
