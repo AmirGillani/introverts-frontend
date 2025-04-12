@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Profile from "../assets/img/profileImg.jpg";
 import { MdPhotoSizeSelectActual } from "react-icons/md";
 import { FaVideo } from "react-icons/fa6";
@@ -6,9 +6,17 @@ import { FaLocationDot } from "react-icons/fa6";
 import { SlCalender } from "react-icons/sl";
 import { MdCancel } from "react-icons/md";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { createPost } from "../REDUX/postReducer";
 
-export default function Input() {
+export default function Input({ addPost, user, token }) {
+  const dispatch = useDispatch();
+
+  const [description, setDescription] = useState("");
+
   const [imgURL, setImgURL] = useState(null);
+
+  const [img, setImg] = useState(null);
 
   const [videoURL, setVideoURL] = useState(null);
 
@@ -16,13 +24,31 @@ export default function Input() {
 
   const videoRef = useRef(null);
 
+  const { status } = useSelector((state) => state.posts);
+
   function uploadImg(e) {
     const img = e.target.files[0];
 
-    if (img) {
-      const imgURL = URL.createObjectURL(img);
+    setImg(img);
 
-      setImgURL(imgURL);
+    if (img) {
+      // FILE READER API WILL READ FILE AND CAN CONVERT IT INTO URL OR TEXT ETC
+
+      const fileReader = new FileReader();
+
+      // FILE USER HAS SELECTED IS IN BINARY FORMAT USE READ AS URL
+      // TO CONVERT IT INTO HUMAN READABLE URL
+
+      fileReader.readAsDataURL(img);
+
+      // ONCE FILE IS READED IT SHOULD ALWAYS USE ON LOAD FUNCTION
+      // WHICH WILL GIVE US .RESULT ATTRIBUTE WHICH WE CAN USE
+
+      fileReader.onload = () => {
+        // SELECTED FILE URL WILL BE PRESENT IN RESULT
+
+        setImgURL(fileReader.result);
+      };
     }
   }
 
@@ -36,6 +62,27 @@ export default function Input() {
     }
   }
 
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    const formData = new FormData();
+
+    formData.append("image", img);
+    formData.append("userID", user._id);
+    formData.append("desc", description);
+    formData.append("name", user.firstName);
+
+    dispatch(createPost(formData, token));
+
+  }
+
+  useEffect(() => {
+    if (status === "succeed") {
+      setImgURL("");
+      setDescription("");
+    }
+  }, [status]);
+
   return (
     <>
       <div className="bg-white rounded-2xl p-3 flex w-[80%] justify-between relative z-10">
@@ -43,61 +90,79 @@ export default function Input() {
           <img src={Profile} alt="profile" className="w-12 h-12 rounded-full" />
         </Link>
 
-        <div className="w-full px-2 flex flex-col">
-          <input
-            type="text"
-            placeholder="What's happening"
-            className="w-full h-10 bg-input-color p-1 rounded-lg outline-none"
-          />
-          <div className="flex justify-between w-full mt-2">
-            <div
-              className="flex justify-center items-center cursor-pointer"
-              onClick={() => imgRef.current.click()}
-            >
-              <MdPhotoSizeSelectActual
-                size={22}
-                className="text-green-700 mr-1"
+        <form onSubmit={handleSubmit} className="w-full">
+          <div className="w-full px-2 flex flex-col">
+            <input
+              type="text"
+              placeholder="What's happening"
+              className="w-full h-10 bg-input-color p-1 rounded-lg outline-none"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+            />
+            <div className="flex justify-between w-full mt-2">
+              <div
+                className="flex justify-center items-center cursor-pointer"
+                onClick={() => imgRef.current.click()}
+              >
+                <MdPhotoSizeSelectActual
+                  size={22}
+                  className="text-green-700 mr-1"
+                />
+                <span className="text-green-700">Photo</span>
+              </div>
+              <div
+                className="flex justify-center items-center cursor-pointer"
+                onClick={() => videoRef.current.click()}
+              >
+                <FaVideo size={22} className="text-purple-700 mr-1" />
+                <span className="text-purple-700">Video</span>
+              </div>
+              <div className="md:flex hidden justify-center items-center cursor-pointer">
+                <FaLocationDot size={22} className="text-red-700 mr-1" />
+                <span className="text-red-700">Location</span>
+              </div>
+              <div className="md:flex hidden justify-center items-center cursor-pointer">
+                <SlCalender size={22} className="text-yellow-700 mr-1" />
+                <span className="text-yellow-700">Schedule</span>
+              </div>
+              <div className="flex justify-center items-center cursor-pointer">
+                {status === "loading" ? (
+                  <button
+                    className="bg-gray text-white w-16 p-0.5 rounded-sm cursor-pointer "
+                    type="submit"
+                    disabled
+                  >
+                    Wait ...
+                  </button>
+                ) : (
+                  <button
+                    className="bg-gradient-to-b from-[#f99827] to-[#f95f35] text-white w-16 p-0.5 rounded-sm cursor-pointer hover:bg-gradient-to-b hover:from-white hover:to-white hover:border-orange hover:border-2 hover:text-orange"
+                    type="submit"
+                  >
+                    Share
+                  </button>
+                )}
+              </div>
+
+              <input
+                type="file"
+                name="img-upload"
+                className="hidden"
+                ref={imgRef}
+                onChange={uploadImg}
+                required
               />
-              <span className="text-green-700">Photo</span>
-            </div>
-            <div
-              className="flex justify-center items-center cursor-pointer"
-              onClick={() => videoRef.current.click()}
-            >
-              <FaVideo size={22} className="text-purple-700 mr-1" />
-              <span className="text-purple-700">Video</span>
-            </div>
-            <div className="md:flex hidden justify-center items-center cursor-pointer">
-              <FaLocationDot size={22} className="text-red-700 mr-1" />
-              <span className="text-red-700">Location</span>
-            </div>
-            <div className="md:flex hidden justify-center items-center cursor-pointer">
-              <SlCalender size={22} className="text-yellow-700 mr-1" />
-              <span className="text-yellow-700">Schedule</span>
-            </div>
-            <div className="flex justify-center items-center cursor-pointer">
-              <button className="bg-gradient-to-b from-[#f99827] to-[#f95f35] text-white w-16 p-0.5 rounded-sm cursor-pointer hover:bg-gradient-to-b hover:from-white hover:to-white hover:border-orange hover:border-2 hover:text-orange">
-                Share
-              </button>
-            </div>
 
-            <input
-              type="file"
-              name="img-upload"
-              className="hidden"
-              ref={imgRef}
-              onChange={uploadImg}
-            />
-
-            <input
-              type="file"
-              name="img-upload"
-              className="hidden"
-              ref={videoRef}
-              onChange={uploadVideo}
-            />
+              <input
+                type="file"
+                name="img-upload"
+                className="hidden"
+                ref={videoRef}
+                onChange={uploadVideo}
+              />
+            </div>
           </div>
-        </div>
+        </form>
       </div>
 
       {imgURL && (

@@ -9,8 +9,10 @@ import "./App.css";
 import { useState } from "react";
 import EditProfileModal from "./components/EditProfileModal";
 import SharePost from "./components/SharePost";
+import { useSelector } from "react-redux";
 function App() {
-  const [auth, setAuth] = useState(true);
+
+  const {authenticated} = useSelector(state=> state.auth);
 
   const [open, setOpen] = useState(false);
 
@@ -26,7 +28,7 @@ function App() {
 
   return (
     <Router>
-      {auth ? (
+      {authenticated ? (
         <div>
           <MobileMenuBar />
           {open && <EditProfileModal close={toggle} />}
@@ -36,12 +38,16 @@ function App() {
               <ProfileSideBar toggle={toggle} />
               <Routes>
                 <Route path="/" element={<Home content="Home Page" />} />
-              </Routes>
-              <Routes>
                 <Route
                   path="/profile"
                   element={<Profile content="Profile Page" toggle={toggle} />}
                 />
+              </Routes>
+              <Routes>
+                {/* <Route
+                  path="/profile"
+                  element={<Profile content="Profile Page" toggle={toggle} />}
+                /> */}
               </Routes>
 
               <RightSideSideBar toggle2={toggle2} />

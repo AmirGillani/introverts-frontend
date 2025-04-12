@@ -1,12 +1,17 @@
-import React, { useState } from "react";
+import React from "react";
 import { MdModeEdit } from "react-icons/md";
-import EditProfileModal from "../components/EditProfileModal";
+import { useSelector } from "react-redux";
 
 export default function MyProfile({toggle}) {
-  const [open, setOpen] = useState(false);
 
-  function close() {
-    setOpen(!open);
+
+  const {user} = useSelector(state=>state.auth);
+
+  function handleLogout(e)
+  {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    window.location.href= "/";
   }
 
   return (
@@ -22,20 +27,20 @@ export default function MyProfile({toggle}) {
         <div className="flex flex-col gap-2">
           <div className="flex gap-2">
             <span className="font-semibold">Status</span>
-            <span className="text-gray-500">in Relationship</span>
+            <span className="text-gray-500">{user.relationship ? user.relationship : "Write Relationship status"}</span>
           </div>
 
           <div className="flex gap-2">
             <span className="font-semibold">Lives</span>
-            <span className="text-gray-500">in Multan</span>
+            <span className="text-gray-500">{user.livesIn ? `In ${user.livesIn}` : "Write Lives In"}</span>
           </div>
 
           <div className="flex gap-2">
             <span className="font-semibold">Works</span>
-            <span className="text-gray-500">at CodeAlpha</span>
+            <span className="text-gray-500">{user.worksAt ? `In ${user.worksAt}` : "Write Works At"}</span>
           </div>
         </div>
-        <button className="bg-gradient-to-b from-[#f99827] to-[#f95f35] text-white  p-2 rounded-sm cursor-pointer hover:bg-gradient-to-b hover:from-white hover:to-white hover:border-orange hover:border-2 hover:text-orange w-full">
+        <button className="bg-gradient-to-b from-[#f99827] to-[#f95f35] text-white  p-2 rounded-sm cursor-pointer hover:bg-gradient-to-b hover:from-white hover:to-white hover:border-orange hover:border-2 hover:text-orange w-full" onClick={handleLogout}>
           Logout
         </button>
       </div>

@@ -1,12 +1,31 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Input from "./Input";
 import NewsFeed from "./NewsFeed";
+import { useDispatch, useSelector } from "react-redux";
+import { timelinePosts } from "../REDUX/postReducer";
 
 export default function Posts() {
+  const dispatch = useDispatch();
+
+  // GET CURRENT USER
+
+  const { user, token } = useSelector((state) => state.auth);
+
+  const { posts, status , added } = useSelector((state) => state.posts);
+
+  useEffect(() => {
+
+     if(posts.length === 0) dispatch(timelinePosts(token));
+
+     if(added) dispatch(timelinePosts(token));
+
+  }, [added]);
+
+
   return (
     <div className="h-screen w-full flex flex-col  items-center overflow-auto">
-      <Input />
-      <NewsFeed />
+      <Input  user={user} token={token} />
+      <NewsFeed posts={posts} token={token} status={status} user={user} />
     </div>
   );
 }

@@ -2,7 +2,7 @@ import React from "react";
 import Post from "./Post";
 
 
-export default function NewsFeed({posts,user,token}) {
+export default function MyPosts({posts,user,token}) {
 
 
   return (

@@ -4,11 +4,15 @@ import home from "../assets/img/home.png";
 import comment from "../assets/img/comment.png";
 import { CiSettings } from "react-icons/ci";
 import { Trends } from "../assets/constants/Trends.js";
+import { Link } from "react-router-dom";
 export default function RightSide({toggle2}) {
   return (
     <div className="md:flex hidden flex-col gap-3 relative z-10 items-center w-[80%]">
       <div className="flex justify-between items-center w-full mt-1">
+        <Link to={"/"}>
         <img src={home} alt="icon" className="w-6 h-6 cursor-pointer" />
+        </Link>
+        
         <img src={notification} alt="icon" className="w-6 h-6 cursor-pointer" />
         <img src={comment} alt="icon" className="w-6 h-6 cursor-pointer" />
 
