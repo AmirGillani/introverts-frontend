@@ -30,8 +30,8 @@ export default function CommentsBlock({ id, user }) {
   };
 
   const submitComment = () => {
-    const comment = { comment: text };
-    dispatch(sendComment(comment, id, token, user._id)).then(() => {
+   
+    dispatch(sendComment(text, id, token, user._id)).then(() => {
       dispatch(allComments(id, token));
       setText("");
     });
