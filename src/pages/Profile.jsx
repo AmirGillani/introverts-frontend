@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import ProfileCard from "../components/ProfileCard";
-import Input from "../components/Input";
 import MyPosts from "../components/MyPosts";
 import { useSelector , useDispatch } from "react-redux";
 import { timelinePosts } from "../REDUX/postReducer";

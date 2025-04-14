@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import ProfileSideBar from "./components/ProfileSideBar";
 import RightSideSideBar from "./components/RightSideBar";
 import Profile from "./pages/Profile";
+import UserProfiles from "./pages/UserProfiles";
 import Auth from "./pages/Auth";
 import MobileMenuBar from "./components/MobileMenuBar";
 import "./App.css";
@@ -32,7 +33,7 @@ function App() {
         <div>
 
           {/* CANT SEND NOTIFICATION IN SERVERLESS PLATFORM LIKE VERCEL */}
-          
+
           {/* <NotificationComponent /> */}
           <MobileMenuBar />
           {open && <EditProfileModal close={toggle} />}
@@ -43,6 +44,7 @@ function App() {
               <Routes>
                 <Route path="/" element={<Home content="Home Page" />} />
                 <Route path="/profile" element={<Profile content="Profile Page" toggle={toggle} />} />
+                <Route path="/user/:id" element={<UserProfiles content="Profile Page" toggle={toggle} />} />
               </Routes>
               <RightSideSideBar toggle2={toggle2} />
             </div>

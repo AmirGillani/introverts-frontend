@@ -8,6 +8,8 @@ export const postsReducer = createSlice({
     error: "",
     posts: [],
     comments:[],
+    personPosts:[],
+    person:{},
     post: null,
     added: false,
   },
@@ -31,8 +33,21 @@ export const postsReducer = createSlice({
     timelinePostSuccess: (state, action) => {
       state.status = "succeed";
       state.posts = action.payload.posts;
+      
     },
     timelinePostFailure: (state, action) => {
+      state.status = "failure";
+      state.error = action.payload.message;
+    },
+    userPostRequest: (state) => {
+      state.status = "loading";
+    },
+    userPostSuccess: (state, action) => {
+      state.status = "succeed";
+      state.personPosts = action.payload.userPosts;
+      state.person = action.payload.person;
+    },
+    userPostFailure: (state, action) => {
       state.status = "failure";
       state.error = action.payload.message;
     },
@@ -93,6 +108,9 @@ export const {
   timelinePostRequest,
   timelinePostSuccess,
   timelinePostFailure,
+  userPostRequest,
+  userPostSuccess,
+  userPostFailure,
   likePostSuccess,
   likePostFailure,
   commentRequest,
@@ -151,6 +169,24 @@ export const timelinePosts = (token) => async (dispatch) => {
     }
   } catch (error) {
     dispatch(timelinePostFailure(error.message));
+  }
+};
+
+export const userPosts = (id) => async (dispatch) => {
+  dispatch(userPostRequest());
+
+  try {
+    const response = await fetch(`https://introverts-backend.vercel.app/posts/userPosts/${id}`);
+
+    const responseData = await response.json();
+
+    if (!response.ok) {
+      dispatch(userPostFailure({ message: responseData.message }));
+    } else {
+      dispatch(userPostSuccess({ userPosts: responseData.posts , person:responseData.person }));
+    }
+  } catch (error) {
+    dispatch(userPostFailure(error.message));
   }
 };
 
