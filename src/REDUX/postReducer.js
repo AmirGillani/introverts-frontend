@@ -112,7 +112,7 @@ export const createPost = (data, token) => async (dispatch) => {
   dispatch(postRequest());
 
   try {
-    const response = await fetch(`http://localhost:5000/posts/createPost`, {
+    const response = await fetch(`https://introverts-backend.vercel.app/posts/createPost`, {
       method: "POST",
       body: data,
       headers: {
