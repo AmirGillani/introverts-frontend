@@ -29,7 +29,7 @@ export default function ProfileCard({ toggle }) {
       to="/profile"
       className={`${
         currentAddress === "/profile" ? "w-[80%]" : "w-[100%]"
-      } h-[55%] overflow-hidden`}
+      }   md:h-[55%]  overflow-hidden`}
        
     >
       <div
