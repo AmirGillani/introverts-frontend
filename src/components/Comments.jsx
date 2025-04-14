@@ -5,7 +5,7 @@ import like from "../assets/img/like.png";
 import notlike from "../assets/img/notlike.png";
 import Reply from "./Reply";
 import { useDispatch, useSelector } from "react-redux";
-import { sendComment, allComments, sendReply } from "../REDUX/postReducer";
+import { sendComment,editComment,deleteComment ,allComments, sendReply } from "../REDUX/postReducer";
 
 export default function CommentsBlock({ id, user }) {
   const dispatch = useDispatch();
@@ -14,8 +14,11 @@ export default function CommentsBlock({ id, user }) {
 
   const [likedIndex, setLikedIndex] = useState(null);
   const [activeReplyCommentID, setActiveReplyCommentID] = useState(null);
+  const [activeCommentID, setActiveCommentID] = useState(null);
   const [text, setText] = useState("");
   const [text2, setText2] = useState("");
+  const [text3, setText3] = useState("");
+  const [isEdit, setEdit] = useState(false);
   const inputRef = useRef(null);
 
   useEffect(() => {
@@ -25,23 +28,50 @@ export default function CommentsBlock({ id, user }) {
     dispatch(allComments(id, token));
   }, [id, token, dispatch]);
 
+  const scrollToInput = () => {
+    inputRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+    inputRef.current?.focus(); // optional: focus the input
+  };
+
   const handleLikeClick = (index) => {
     setLikedIndex(likedIndex === index ? null : index);
   };
 
+  const handleEdit = (id) => {
+
+    setActiveCommentID(id);
+
+    const commentFound = comments.find((comment) => comment._id === id);
+
+   if(commentFound?.comment) setText3(commentFound.comment);
+
+    setEdit(true);
+  };
+
+  const submitEdit = () => {
+    
+    dispatch(editComment(text3,id, activeCommentID,token, user._id)).then(() => {
+      dispatch(allComments(id, token));
+      setText3("");
+    });
+  };
+
   const submitComment = () => {
-   
     dispatch(sendComment(text, id, token, user._id)).then(() => {
       dispatch(allComments(id, token));
       setText("");
     });
   };
 
-  const handleEdit = (id) => {
-    const comment = comments.find(comment => comment._id === id );
-
-    setText(comment);
+  const handleDelete = (commentId) => {
+    
+    dispatch(deleteComment(id, commentId,token)).then(() => {
+      dispatch(allComments(id, token));
+      
+    });
   };
+
+
 
   const handleReplySubmit = (commentID, postID) => {
     dispatch(sendReply(commentID, postID, token, text2)).then(() => {
@@ -53,36 +83,64 @@ export default function CommentsBlock({ id, user }) {
 
   return (
     <div>
-      {/* Comment Input */}
-      <div className="bg-white rounded-t-2xl p-3 flex w-full gap-1 relative z-10">
-        <img
-          src={user.profilePic}
-          alt="profile"
-          className="w-12 h-12 rounded-full"
-        />
-        <div className="w-[80%] px-2 flex gap-1 justify-center items-center">
-          <input
-            type="text"
-            placeholder="What's happening"
-            className="w-full h-10 bg-input-color p-1 rounded-lg outline-none"
-            ref={inputRef}
-            value={text}
-            onChange={(e) => setText(e.target.value)}
+      {isEdit ? (
+        <div className="bg-white rounded-t-2xl p-3 flex w-full gap-1 relative z-10">
+          <img
+            src={user.profilePic}
+            alt="profile"
+            className="w-12 h-12 rounded-full"
           />
-          {status === "loading" ? (
-            "Wait ..."
-          ) : (
-            <img
-              src={share}
-              alt="share"
-              className="cursor-pointer w-6 h-6"
-              onClick={submitComment}
+          <div className="w-[80%] px-2 flex gap-1 justify-center items-center">
+            <input
+              type="text"
+              placeholder="What's happening"
+              className="w-full h-10 bg-input-color p-1 rounded-lg outline-none"
+              ref={inputRef}
+              value={text3}
+              onChange={(e) => setText3(e.target.value)}
             />
-          )}
+            {status === "loading" ? (
+              "Wait ..."
+            ) : (
+              <img
+                src={share}
+                alt="share"
+                className="cursor-pointer w-6 h-6"
+                onClick={submitEdit}
+              />
+            )}
+          </div>
         </div>
-      </div>
+      ) : (
+        <div className="bg-white rounded-t-2xl p-3 flex w-full gap-1 relative z-10">
+          <img
+            src={user.profilePic}
+            alt="profile"
+            className="w-12 h-12 rounded-full"
+          />
+          <div className="w-[80%] px-2 flex gap-1 justify-center items-center">
+            <input
+              type="text"
+              placeholder="What's happening"
+              className="w-full h-10 bg-input-color p-1 rounded-lg outline-none"
+              ref={inputRef}
+              value={text}
+              onChange={(e) => setText(e.target.value)}
+            />
+            {status === "loading" ? (
+              "Wait ..."
+            ) : (
+              <img
+                src={share}
+                alt="share"
+                className="cursor-pointer w-6 h-6"
+                onClick={submitComment}
+              />
+            )}
+          </div>
+        </div>
+      )}
 
-      {/* Comments & Replies */}
       <div className="rounded-b-2xl bg-white">
         {comments.map((comment, index) => (
           <div key={comment._id}>
@@ -117,8 +175,8 @@ export default function CommentsBlock({ id, user }) {
                   {comment.userID === user._id && (
                     <span
                       className="text-sm text-gray-500 font-semibold text-left w-full cursor-pointer hover:text-gray-600"
-                      onClick={()=>handleEdit(comment._id)
-                      }
+                      onClick={() => {handleEdit(comment._id);scrollToInput()}}
+                     
                     >
                       Edit
                     </span>
@@ -127,13 +185,7 @@ export default function CommentsBlock({ id, user }) {
                   {comment.userID === user._id && (
                     <span
                       className="text-sm text-gray-500 font-semibold text-left w-full cursor-pointer hover:text-gray-600"
-                      onClick={() =>
-                        setActiveReplyCommentID(
-                          activeReplyCommentID === comment._id
-                            ? null
-                            : comment._id
-                        )
-                      }
+                      onClick={() =>handleDelete(comment._id)}
                     >
                       Delete
                     </span>

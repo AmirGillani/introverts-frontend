@@ -33,7 +33,7 @@ export default function FollowersCard() {
         {users.map((peoples, index) => {
           {
             return user._id !== peoples._id && (
-              <Link to={`/user/${peoples._id}`}>
+              <Link to={`/user/${peoples._id}`} key={index}>
                <div
                 key={index}
                 className="min-w-[160px] max-w-[180px] bg-white rounded-2xl shadow-md flex flex-col items-center p-4"

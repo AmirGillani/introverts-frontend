@@ -74,6 +74,32 @@ export const postsReducer = createSlice({
       state.error = action.payload.message;
     },
 
+    editCommentRequest: (state) => {
+      state.status = "loading";
+    },
+    editCommentSuccess: (state, action) => {
+      state.status = "succeed";
+      state.message = action.payload.message;
+      
+    },
+    editCommentFailure: (state, action) => {
+      state.status = "failure";
+      state.error = action.payload.message;
+    },
+
+    deleteCommentRequest: (state) => {
+      state.status = "loading";
+    },
+    deleteCommentSuccess: (state, action) => {
+      state.status = "succeed";
+      state.message = action.payload.message;
+      
+    },
+    deleteCommentFailure: (state, action) => {
+      state.status = "failure";
+      state.error = action.payload.message;
+    },
+
     replyRequest: (state) => {
       state.status = "loading";
     },
@@ -113,12 +139,23 @@ export const {
   userPostFailure,
   likePostSuccess,
   likePostFailure,
+
   commentRequest,
   commentSuccess,
   commentFailure,
+  
+  editCommentRequest,
+  editCommentSuccess,
+  editCommentFailure,
+
+  deleteCommentRequest,
+  deleteCommentSuccess,
+  deleteCommentFailure,
+
   replyRequest,
   replySuccess,
   replyFailure,
+
   allCommentsRequest,
   allCommentsSuccess,
   allCommentsFailure,
@@ -241,6 +278,70 @@ export const sendComment = (data, id, token,userID) => async (dispatch) => {
     }
   } catch (error) {
     dispatch(commentFailure(error.message));
+  }
+};
+
+export const editComment = (data, postID,commentID,token, userID) => async (dispatch) => {
+  dispatch(editCommentRequest());
+
+  try {
+    const response = await fetch(
+      `https://introverts-backend.vercel.app/posts/editComment/${postID}`,
+      {
+        method: "PUT",
+        body: JSON.stringify({comment:data,commentID:commentID,userID:userID}),
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    const responseData = await response.json();
+
+    if (!response.ok) {
+      dispatch(editCommentFailure({ message: responseData.message }));
+    } else {
+      dispatch(
+        editCommentSuccess({
+          message: responseData.message
+        })
+      );
+    }
+  } catch (error) {
+    dispatch(editCommentFailure(error.message));
+  }
+};
+
+export const deleteComment = (postID,commentID,token) => async (dispatch) => {
+  dispatch(deleteCommentRequest());
+
+  try {
+    const response = await fetch(
+      `https://introverts-backend.vercel.app/posts/deleteComment/${postID}/${commentID}`,
+      {
+        method: "DELETE",
+     
+        headers: {
+        
+          authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    const responseData = await response.json();
+
+    if (!response.ok) {
+      dispatch(deleteCommentFailure({ message: responseData.message }));
+    } else {
+      dispatch(
+        deleteCommentSuccess({
+          message: responseData.message
+        })
+      );
+    }
+  } catch (error) {
+    dispatch(deleteCommentFailure(error.message));
   }
 };
 
