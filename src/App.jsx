@@ -30,7 +30,10 @@ function App() {
     <Router>
       {authenticated ? (
         <div>
-          <NotificationComponent />
+
+          {/* CANT SEND NOTIFICATION IN SERVERLESS PLATFORM LIKE VERCEL */}
+          
+          {/* <NotificationComponent /> */}
           <MobileMenuBar />
           {open && <EditProfileModal close={toggle} />}
           {open2 && <SharePost close={toggle2} />}
