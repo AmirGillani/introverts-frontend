@@ -10,6 +10,7 @@ import { useState } from "react";
 import EditProfileModal from "./components/EditProfileModal";
 import SharePost from "./components/SharePost";
 import { useSelector } from "react-redux";
+import {NotificationComponent} from "../src/components/Notification"
 
 function App() {
   const { authenticated } = useSelector((state) => state.auth);
@@ -29,6 +30,7 @@ function App() {
     <Router>
       {authenticated ? (
         <div>
+          <NotificationComponent />
           <MobileMenuBar />
           {open && <EditProfileModal close={toggle} />}
           {open2 && <SharePost close={toggle2} />}
