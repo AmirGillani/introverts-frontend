@@ -48,7 +48,7 @@ export default function ProfileCard({ toggle, person }) {
             src={person.profilePic ? person.profilePic : person.profilePic}
             alt="profile"
             onError={(e) => (e.target.src = profile)}
-            className={`absolute z-10 -bottom-12 rounded-full shadow-lg shadow-[rgba(0,0,0,0.25)] left-56 w-32 h-32 `
+            className={`absolute z-10 -bottom-12 rounded-full shadow-lg shadow-[rgba(0,0,0,0.25)] md:left-56 xs:left-28 left-36 md:w-32  w-20 h-20 `
         }
           />
         </div>
@@ -62,7 +62,7 @@ export default function ProfileCard({ toggle, person }) {
             <span className="flex gap-1 items-center">
               {person?.worksAt || ""}
 
-              <MdModeEdit className="md:hidden inline-block" onClick={toggle} />
+              
             </span>
           </div>
 

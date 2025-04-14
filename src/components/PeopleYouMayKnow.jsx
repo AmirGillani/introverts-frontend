@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllUsers, followUser, unFollowUser } from "../REDUX/authReducer";
+import {Link} from "react-router-dom";
 
 export default function FollowersCard() {
   const dispatch = useDispatch();
@@ -32,7 +33,8 @@ export default function FollowersCard() {
         {users.map((peoples, index) => {
           {
             return user._id !== peoples._id && (
-              <div
+              <Link to={`/user/${peoples._id}`}>
+               <div
                 key={index}
                 className="min-w-[160px] max-w-[180px] bg-white rounded-2xl shadow-md flex flex-col items-center p-4"
               >
@@ -63,7 +65,8 @@ export default function FollowersCard() {
                     Follow
                   </button>
                 )}
-              </div>
+              </div></Link>
+             
             );
           }
         })}
