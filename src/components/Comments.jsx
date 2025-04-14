@@ -7,7 +7,7 @@ import Reply from "./Reply";
 import { useDispatch, useSelector } from "react-redux";
 import { sendComment, allComments, sendReply } from "../REDUX/postReducer";
 
-export default function CommentsBlock({ id }) {
+export default function CommentsBlock({ id ,user}) {
   const dispatch = useDispatch();
   const { token } = useSelector((state) => state.auth);
   const { comments, status } = useSelector((state) => state.posts);
@@ -49,7 +49,7 @@ export default function CommentsBlock({ id }) {
     <div>
       {/* Comment Input */}
       <div className="bg-white rounded-t-2xl p-3 flex w-full gap-1 relative z-10">
-        <img src={profile} alt="profile" className="w-12 h-12 rounded-full" />
+        <img src={user.profilePic} alt="profile" className="w-12 h-12 rounded-full" />
         <div className="w-[80%] px-2 flex gap-1 justify-center items-center">
           <input
             type="text"
@@ -127,7 +127,7 @@ export default function CommentsBlock({ id }) {
                 {/* Reply Input */}
                 <div className="w-full flex gap-2 ml-16 mt-1">
                   <img
-                    src={profile}
+                    src={user.profilePic}
                     alt="img"
                     className="w-10 rounded-full h-10"
                   />
@@ -156,6 +156,7 @@ export default function CommentsBlock({ id }) {
                     img={reply.img}
                     name={reply.name}
                     reply={reply.text}
+                    user={user}
                   />
                 ))}
               </div>

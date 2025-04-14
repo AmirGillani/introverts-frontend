@@ -5,46 +5,31 @@ import comment from "../assets/img/comment.png";
 import share from "../assets/img/share.png";
 import CommentsBlock from "./Comments";
 import { useDispatch } from "react-redux";
-import {likePost} from "../REDUX/postReducer";
+import { likePost } from "../REDUX/postReducer";
 
-export default function Post({ name, description, user,likes, img, id,token }) {
-
-  const dispatch = useDispatch()
-
+export default function Post({
+  name,
+  description,
+  type,
+  user,
+  likes,
+  img,
+  id,
+  token,
+}) {
+  const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
-
-  // CHECK EITHER USER HAVE LIKE POST ALREADY OR NOT
-
   const [liked, setLiked] = useState(likes.includes(user._id));
-
-  //  WE CAN USE LIKES IN PROP BUT I WANT TO AUTOMATICALLY CHANGE VALUE 
-
-  // WHEN USER CLICK LIKES IT CAN BE DONE BY HOOKS
-
   const [likesHook, setLikes] = useState(likes.length);
 
-  function handleLikes(e)
-  {
-      // TOGGLE LIKE AND UNLIKE
-
-      setLiked(pre => !pre);
-
-      // UPDATE DATABASE FOR PERMANENT CHANGE
-
-      dispatch(likePost(id,token))
-
-      // IF USER HAS LIKED POST THEN DONT COUNT LIKE ELSE COUNT IT LIKES
-
-      liked ? setLikes(pre => pre -1) : setLikes(pre => pre +1);
+  function handleLikes() {
+    setLiked((pre) => !pre);
+    dispatch(likePost(id, token));
+    liked ? setLikes((pre) => pre - 1) : setLikes((pre) => pre + 1);
   }
 
-  return (
-    <div className="w-full h-auto flex flex-col gap-2 my-3 bg-card p-3 rounded-2xl relative">
-      <img
-        src={img}
-        alt="post"
-        className="w-full object-center max-h-[25rem] rounded-2xl"
-      />
+  const ActionSection = (
+    <>
       <div className="flex gap-3">
         <img
           src={liked ? like : notlike}
@@ -60,19 +45,52 @@ export default function Post({ name, description, user,likes, img, id,token }) {
         />
         <img src={share} alt="share" className="cursor-pointer" />
       </div>
-
       <span>{likesHook} likes</span>
+    </>
+  );
 
-      {isOpen ? (
-        <>
-          <CommentsBlock id={id}/>
-        </>
-      ) : (
-        <div className="flex flex-col">
-          <span className="font-black">{name}</span>
-          <span>{description}</span>
-        </div>
-      )}
+  const DescriptionBlock = (
+    <div className="flex flex-col">
+      <span className="font-black">{name}</span>
+      <span
+        className={`capitalize font-semibold ${
+          type === "text" ? "text-3xl" : "text-base"
+        }`}
+      >
+        {description}
+      </span>
     </div>
+  );
+  
+
+  return (
+    <>
+      <div className="w-full h-auto flex flex-col gap-2 my-3 bg-card p-3 rounded-2xl relative">
+        {/* Render based on post type */}
+        {type === "image" && (
+          <img
+            src={img}
+            alt="post"
+            className="w-full object-center max-h-[25rem] rounded-2xl"
+          />
+        )}
+
+        {type === "video" && (
+          <video
+            controls
+            src={img}
+            className="w-full max-h-[25rem] rounded-2xl"
+          />
+        )}
+
+        {isOpen ? (
+          <CommentsBlock id={id} user={user} />
+        ) : (
+          DescriptionBlock
+        )}
+
+        {ActionSection}
+      </div>
+    </>
   );
 }

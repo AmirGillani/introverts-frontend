@@ -17,6 +17,7 @@ export default function NewsFeed({posts,user,token}) {
               likes={post.likes}
               user={user}
               img={post.image}
+              type={post.type}
               id={post._id}
               key={index}
               token={token}

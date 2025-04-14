@@ -183,7 +183,7 @@ export const signup = (data) => async (dispatch) => {
   dispatch(signupRequest());
 
   try {
-    const response = await fetch(`http://localhost:5000/auth/signup`, {
+    const response = await fetch(`https://introverts-backend.vercel.app/auth/signup`, {
       method: "POST",
       body: data
     });
@@ -206,7 +206,7 @@ export const login = (data) => async (dispatch) => {
   dispatch(loginRequest());
 
   try {
-    const response = await fetch(`http://localhost:5000/auth/login`, {
+    const response = await fetch(`https://introverts-backend.vercel.app/auth/login`, {
       method: "POST",
       body: JSON.stringify(data),
       headers: {
@@ -239,7 +239,7 @@ export const editProfile = (data, token, id) => async (dispatch) => {
 
   try {
     const response = await fetch(
-      `http://localhost:5000/users/updateUser/${id}`,
+      `https://introverts-backend.vercel.app/users/updateUser/${id}`,
       {
         method: "PUT",
         body: data,
@@ -265,7 +265,7 @@ export const getAllUsers = () => async (dispatch) => {
   dispatch(allUsersRequest());
 
   try {
-    const response = await fetch(`http://localhost:5000/users/`);
+    const response = await fetch(`https://introverts-backend.vercel.app/users/`);
 
     const responseData = await response.json();
 
@@ -283,7 +283,7 @@ export const getSingleUser = (id) => async (dispatch) => {
   dispatch(UserRequest());
 
   try {
-    const response = await fetch(`http://localhost:5000/users/${id}`);
+    const response = await fetch(`https://introverts-backend.vercel.app/users/${id}`);
 
     const responseData = await response.json();
 
@@ -299,7 +299,7 @@ export const getSingleUser = (id) => async (dispatch) => {
 
 export const followUser = (id, token) => async (dispatch) => {
   try {
-    const response = await fetch(`http://localhost:5000/users/follow/${id}`, {
+    const response = await fetch(`https://introverts-backend.vercel.app/users/follow/${id}`, {
       method: "PUT",
       headers: {
         authorization: `Bearer ${token}`,
@@ -321,7 +321,7 @@ export const followUser = (id, token) => async (dispatch) => {
 export const unFollowUser = (id, token) => async (dispatch) => {
 
   try {
-    const response = await fetch(`http://localhost:5000/users/unfollow/${id}`, {
+    const response = await fetch(`https://introverts-backend.vercel.app/users/unfollow/${id}`, {
       method: "PUT",
       headers: {
         authorization: `Bearer ${token}`,

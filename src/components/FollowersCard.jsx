@@ -7,6 +7,8 @@ import {
   getSingleUser,
 } from "../REDUX/authReducer";
 
+import {timelinePosts} from "../REDUX/postReducer";
+
 export default function FollowersCard() {
   const dispatch = useDispatch();
 
@@ -20,12 +22,14 @@ export default function FollowersCard() {
     await dispatch(followUser(id, token));
     await dispatch(getAllUsers());
     await dispatch(getSingleUser(user._id));
+    await dispatch(timelinePosts(token));
   };
 
   const unfollow = async (id, token) => {
     await dispatch(unFollowUser(id, token));
     await dispatch(getAllUsers());
     await dispatch(getSingleUser(user._id));
+    await dispatch(timelinePosts(token));
   };
 
   return (

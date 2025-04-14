@@ -6,7 +6,7 @@ export default function MyPosts({posts,user,token}) {
 
 
   return (
-    <div className="w-[80%] relative z-10">
+    <div className="w-[80%] overflow-auto h-[45%] relative z-10">
       
       {posts.length >0 
         ? posts.map((post, index) => {
@@ -17,6 +17,7 @@ export default function MyPosts({posts,user,token}) {
               likes={post.likes}
               user={user}
               img={post.image}
+              type={post.type}
               id={post._id}
               key={index}
               token={token}

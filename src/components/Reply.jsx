@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Reply({ img, name, reply }) {
+export default function Reply({ img, name, reply,user }) {
   return (
     <div id="reply">
       <div className="w-full flex gap-2 ml-16 mt-1">

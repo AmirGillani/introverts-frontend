@@ -136,7 +136,7 @@ export const timelinePosts = (token) => async (dispatch) => {
   dispatch(timelinePostRequest());
 
   try {
-    const response = await fetch(`http://localhost:5000/posts/timeline`, {
+    const response = await fetch(`https://introverts-backend.vercel.app/posts/timeline`, {
       headers: {
         authorization: `Bearer ${token}`,
       },
@@ -156,7 +156,7 @@ export const timelinePosts = (token) => async (dispatch) => {
 
 export const likePost = (id, token) => async (dispatch) => {
   try {
-    const response = await fetch(`http://localhost:5000/posts/likePost/${id}`, {
+    const response = await fetch(`https://introverts-backend.vercel.app/posts/likePost/${id}`, {
       method: "PUT",
       headers: {
         authorization: `Bearer ${token}`,
@@ -180,7 +180,7 @@ export const sendComment = (data, id, token) => async (dispatch) => {
 
   try {
     const response = await fetch(
-      `http://localhost:5000/posts/sendComment/${id}`,
+      `https://introverts-backend.vercel.app/posts/sendComment/${id}`,
       {
         method: "PUT",
         body: JSON.stringify(data),
@@ -214,7 +214,7 @@ export const sendReply = (commentID, postID, token,text) => async (dispatch) => 
 
   try {
     const response = await fetch(
-      `http://localhost:5000/posts/sendReply/${postID}`,
+      `https://introverts-backend.vercel.app/posts/sendReply/${postID}`,
       {
         method: "PUT",
         body: JSON.stringify({text:text,commentID:commentID}),
@@ -247,7 +247,7 @@ export const allComments = (id, token) => async (dispatch) => {
 
   try {
     const response = await fetch(
-      `http://localhost:5000/posts/allComments/${id}`,
+      `https://introverts-backend.vercel.app/posts/allComments/${id}`,
       {
         headers: {
           authorization: `Bearer ${token}`,

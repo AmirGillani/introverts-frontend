@@ -7,7 +7,7 @@ import { SlCalender } from "react-icons/sl";
 import { MdCancel } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { createPost } from "../REDUX/postReducer";
+import { createPost, timelinePosts } from "../REDUX/postReducer";
 
 export default function Input({ addPost, user, token }) {
   const dispatch = useDispatch();
@@ -18,6 +18,8 @@ export default function Input({ addPost, user, token }) {
 
   const [img, setImg] = useState(null);
 
+  const [video, setVideo] = useState(null);
+
   const [videoURL, setVideoURL] = useState(null);
 
   const imgRef = useRef(null);
@@ -27,6 +29,7 @@ export default function Input({ addPost, user, token }) {
   const { status } = useSelector((state) => state.posts);
 
   function uploadImg(e) {
+    setVideo(null);
     const img = e.target.files[0];
 
     setImg(img);
@@ -53,9 +56,20 @@ export default function Input({ addPost, user, token }) {
   }
 
   function uploadVideo(e) {
+    setImg(null);
     const video = e.target.files[0];
 
+    // 100MB in bytes = 100 * 1024 * 1024
+    const MAX_SIZE = 100 * 1024 * 1024;
+
     if (video) {
+      if (video.size > MAX_SIZE) {
+        alert("Video is too large. Maximum allowed size is 100MB.");
+        return;
+      }
+
+      setVideo(video);
+
       const videoURL = URL.createObjectURL(video);
 
       setVideoURL(videoURL);
@@ -66,14 +80,25 @@ export default function Input({ addPost, user, token }) {
     e.preventDefault();
 
     const formData = new FormData();
-
-    formData.append("image", img);
+  
     formData.append("userID", user._id);
     formData.append("desc", description);
     formData.append("name", user.firstName);
-
-    dispatch(createPost(formData, token));
-
+  
+    // Set type and media based on input
+    if (img && !video) {
+      formData.append("image", img);
+      formData.append("type", "image");
+    } else if (video && !img) {
+      formData.append("image", video);
+      formData.append("type", "video");
+    } else {
+      formData.append("type", "text");
+    }
+  
+    dispatch(createPost(formData, token)).then(() => {
+      dispatch(timelinePosts(token));
+    });
   }
 
   useEffect(() => {
@@ -87,7 +112,11 @@ export default function Input({ addPost, user, token }) {
     <>
       <div className="bg-white rounded-2xl p-3 flex w-[80%] justify-between relative z-10">
         <Link to={"/profile"}>
-          <img src={Profile} alt="profile" className="w-12 h-12 rounded-full" />
+          <img
+            src={user ? user.profilePic : Profile}
+            alt="profile"
+            className="w-12 h-12 rounded-full"
+          />
         </Link>
 
         <form onSubmit={handleSubmit} className="w-full">
@@ -150,7 +179,6 @@ export default function Input({ addPost, user, token }) {
                 className="hidden"
                 ref={imgRef}
                 onChange={uploadImg}
-                required
               />
 
               <input
