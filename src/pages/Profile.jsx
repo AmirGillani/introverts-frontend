@@ -30,7 +30,7 @@ export default function Profile({toggle}) {
   },[posts, user])
 
   return (
-    <div className="flex flex-col items-center gap-2  md:h-[117vh]  ">
+    <div className="flex flex-col items-center gap-2  md:h-[117vh]   ">
       <ProfileCard toggle={toggle}  />
      <MyPosts posts={myPosts} user={user} />
     </div>
