@@ -99,14 +99,16 @@ export default function Input({ user, token }) {
     dispatch(createPost(formData, token)).then(() => {
       dispatch(timelinePosts(token));
     });
-    setImg(null);
-    setVideo(null);
+   
   }
 
   useEffect(() => {
     if (status === "succeed") {
       setImgURL("");
       setDescription("");
+      setImg(null);
+      setVideo(null);
+      setVideoURL("");
     }
   }, [status]);
 

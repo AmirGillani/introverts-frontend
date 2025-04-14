@@ -110,6 +110,11 @@ export default function Modal({ close }) {
     if (status === "succeed") {
       setImgURL("");
       setDescription("");
+      setImgURL("");
+      setDescription("");
+      setImg(null);
+      setVideo(null);
+      setVideoURL("");
     }
   }, [status]);
 
