@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import like from "../assets/img/like.png";
 import notlike from "../assets/img/notlike.png";
 import comment from "../assets/img/comment.png";
@@ -19,8 +19,14 @@ export default function Post({
 }) {
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
-  const [liked, setLiked] = useState(likes.includes(user._id));
+  const hasLiked = likes.includes(user._id);
+  const [liked, setLiked] = useState(hasLiked);
   const [likesHook, setLikes] = useState(likes.length);
+
+  useEffect(() => {
+    setLiked(likes.includes(user._id));
+    setLikes(likes.length);
+  }, [likes, user._id]);
 
   function handleLikes() {
     setLiked((pre) => !pre);

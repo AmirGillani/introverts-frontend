@@ -4,7 +4,7 @@ import Post from "./Post";
 
 export default function NewsFeed({posts,user,token}) {
 
-
+  
   return (
     <div className="w-[80%] relative z-10">
       
