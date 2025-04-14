@@ -158,7 +158,7 @@ export default function CommentsBlock({ id, user }) {
                 <span className="w-full bg-input-color p-1 rounded-lg outline-none">
                   {comment.comment}
                 </span>
-                <span className="flex w-[40%] self-start">
+                <span className="flex md:w-[40%] w-[60%] md:gap-0 gap-0.5 self-start">
                   <span
                     className="text-sm text-gray-500 font-semibold text-left w-full cursor-pointer hover:text-gray-600"
                     onClick={() =>

@@ -54,7 +54,7 @@ export default function FollowersCard() {
                     />
                     <div className="flex flex-col">
                       <span className="font-bold">{peoples.firstName}</span>
-                      <span>{peoples.username?.slice(0, 10)}</span>
+                      <span>{peoples.username?.slice(0, 11)}</span>
                     </div>
                   </div>
 

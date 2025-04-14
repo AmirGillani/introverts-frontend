@@ -1,5 +1,7 @@
 import Home from "./pages/Home";
+import { useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
 import ProfileSideBar from "./components/ProfileSideBar";
 import RightSideSideBar from "./components/RightSideBar";
 import Profile from "./pages/Profile";
@@ -14,10 +16,44 @@ import { useSelector } from "react-redux";
 import NotificationComponent from "../src/components/Notification"
 
 function App() {
+
   const { authenticated } = useSelector((state) => state.auth);
 
   const [open, setOpen] = useState(false);
   const [open2, setOpen2] = useState(false);
+
+  const logout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    window.location.href="/";
+  };
+
+  // LOGOUT AUTOMATICALLY DEPENDING UPON TOKEN EXPIRY DATE
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    if (token) {
+      try {
+        const decoded = jwtDecode(token);
+        const expiry = decoded.exp * 1000;
+        const now = Date.now();
+
+        if (expiry <= now) {
+          logout();
+        } else {
+          const timeout = setTimeout(() => {
+            logout();
+          }, expiry - now);
+
+          return () => clearTimeout(timeout);
+        }
+      } catch (err) {
+        console.error("Invalid token");
+        logout(); // fallback in case decoding fails
+      }
+    }
+  }, []);
 
   function toggle() {
     setOpen(!open);
