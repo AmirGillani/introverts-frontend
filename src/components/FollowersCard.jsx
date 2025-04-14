@@ -37,7 +37,7 @@ export default function FollowersCard() {
   return (
     <div className="w-full p-2 relative z-10 h-[30%]">
       <span className="font-bold text-black text-left block mb-2">
-        Who Is Following You
+        People You May Know
       </span>
 
       <div className="w-full h-[calc(100%-2rem)] overflow-y-auto pr-1">
