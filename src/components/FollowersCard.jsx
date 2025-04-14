@@ -44,7 +44,7 @@ export default function FollowersCard() {
         {users.map((peoples, index) => {
           if (peoples._id !== user._id) {
             return (
-              <Link to={`/user/${peoples._id}`}>
+              <Link to={`/user/${peoples._id}`} key={index}>
                 <div className="flex justify-between w-80 mb-4" key={index}>
                   <div className="flex w-full">
                     <img

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import ProfileCard from "../components/ProfileCard";
+import ProfileCard from "../components/UserProfileCard";
 import MyPosts from "../components/MyPosts";
 import { useSelector, useDispatch } from "react-redux";
 import { userPosts } from "../REDUX/postReducer";
@@ -11,8 +11,6 @@ export default function Profile({ toggle }) {
   const { person,personPosts } = useSelector((state) => state.posts);
 
   const { id } = useParams();
-
-  alert(id);
 
   const [myPosts, setMyPosts] = useState([]);
 
@@ -32,7 +30,7 @@ export default function Profile({ toggle }) {
 
   return (
     <div className="flex flex-col items-center gap-2  md:h-[117vh]   ">
-      <ProfileCard toggle={toggle} />
+      <ProfileCard toggle={toggle} person={person} />
       <MyPosts posts={myPosts} user={personHook} />
     </div>
   );

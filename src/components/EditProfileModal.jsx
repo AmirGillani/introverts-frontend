@@ -51,11 +51,11 @@ export default function Modal({ close }) {
   // FORMDATA LOGICS
 
   const [formData, setFormData] = useState({
-    firstName: user.firstName,
-    lastName: user.lastName,
-    worksAt: user.worksAt,
-    livesIn: user.livesIn,
-    relationship: user.relationship,
+    firstName: user.firstName  ? user.firstName : "",
+    lastName: user.lastName ? user.lastName : "",
+    worksAt: user.worksAt ? user.worksAt : "",
+    livesIn: user.livesIn ? user.livesIn : "",
+    relationship: user.relationship ? user.relationship :"",
     profilePic: null,
     coverPic: null,
   });

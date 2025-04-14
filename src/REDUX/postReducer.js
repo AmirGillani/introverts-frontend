@@ -176,14 +176,14 @@ export const userPosts = (id) => async (dispatch) => {
   dispatch(userPostRequest());
 
   try {
-    const response = await fetch(`https://introverts-backend.vercel.app/posts/userPosts/${id}`);
+    const response = await fetch(`http://localhost:5000/posts/userPosts/${id}`);
 
     const responseData = await response.json();
 
     if (!response.ok) {
       dispatch(userPostFailure({ message: responseData.message }));
     } else {
-      dispatch(userPostSuccess({ userPosts: responseData.posts , person:responseData.person }));
+      dispatch(userPostSuccess({ userPosts: responseData.userPosts , person:responseData.person }));
     }
   } catch (error) {
     dispatch(userPostFailure(error.message));
