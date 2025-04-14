@@ -8,23 +8,27 @@ export default function NewsFeed({posts,user,token}) {
   return (
     <div className="w-[80%] relative z-10">
       
-      {posts.length >0 
-        ? posts.map((post, index) => {
-          return (
-            <Post
-              name={post.name}
-              description={post.desc}
-              likes={post.likes}
-              user={user}
-              img={post.image}
-              type={post.type}
-              id={post._id}
-              key={index}
-              token={token}
-            />
-          );
-        })
-        : <h2 className="text-4xl text-gray-500 text-center">NO POSTS</h2>}
+            {status === "loading" ? (
+              <div className="text-4xl font-bold text-center bg-gradient-to-r from-orange-400 to-orange-600 text-transparent bg-clip-text">
+                Loading...
+              </div>
+            ) : posts.length > 0 ? (
+              posts.map((post, index) => (
+                <Post
+                  name={post.name}
+                  description={post.desc}
+                  likes={post.likes}
+                  user={user}
+                  img={post.image}
+                  type={post.type}
+                  id={post._id}
+                  key={index}
+                  token={token}
+                />
+              ))
+            ) : (
+              <h2 className="text-4xl text-gray-500 text-center">NO POSTS</h2>
+            )}
     </div>
   );
 }

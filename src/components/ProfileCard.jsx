@@ -5,7 +5,7 @@ import profile from "../assets/img/user.png";
 import { MdModeEdit } from "react-icons/md";
 import { useSelector } from "react-redux";
 
-export default function ProfileCard({ toggle, person }) {
+export default function ProfileCard({ toggle }) {
   const { user } = useSelector((state) => state.auth);
   const { posts } = useSelector((state) => state.posts);
 
@@ -42,7 +42,7 @@ export default function ProfileCard({ toggle, person }) {
             alt="cover"
             onError={(e) => (e.target.src = cover)}
             className={`overflow-clip w-full ${
-              currentAddress === "/profile" ? "h-48" : ""
+              currentAddress === "/profile" ? "h-48" : "h-36"
             }`}
           />
 
@@ -53,7 +53,7 @@ export default function ProfileCard({ toggle, person }) {
             className={`absolute z-10 -bottom-12 rounded-full shadow-lg shadow-[rgba(0,0,0,0.25)] ${
               currentAddress === "/profile"
                 ? "w-28 h-28 md:left-60 left-24"
-                : "w-24 left-24"
+                : "w-24 h-24 left-24"
             }`}
           />
         </div>

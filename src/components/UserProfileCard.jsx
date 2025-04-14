@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
-import {  useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import cover from "../assets/img/cover.jpg";
 import profile from "../assets/img/user.png";
 import { MdModeEdit } from "react-icons/md";
 import { useSelector } from "react-redux";
 
-export default function ProfileCard({ toggle, person }) {
-  
+export default function ProfileCard({  person }) {
   const { posts } = useSelector((state) => state.posts);
 
   const [currentAddress, setCurrentAddress] = useState("/");
@@ -16,7 +15,6 @@ export default function ProfileCard({ toggle, person }) {
     setCurrentAddress(location.pathname);
   }, [location]);
 
-
   function getPosts(id) {
     const myPosts = posts?.filter((post) => post.userID === id);
     return myPosts?.length || 0;
@@ -24,10 +22,9 @@ export default function ProfileCard({ toggle, person }) {
 
   return (
     <div
-     
       className={`${
         currentAddress === "/" ? "w-[100%]" : "w-[80%]"
-      }   md:h-[70%]  overflow-hidden`}
+      }   md:h-[70%] h-[65vh]  overflow-hidden`}
     >
       <div
         className={`rounded-3xl overflow-clip relative z-10 cursor-pointer ${
@@ -39,17 +36,16 @@ export default function ProfileCard({ toggle, person }) {
             src={person?.coverPic ? person.coverPic : cover}
             alt="cover"
             onError={(e) => (e.target.src = cover)}
-            className={`overflow-clip w-full ${
-              currentAddress === "/profile" ? "h-48" : ""
-            }`}
+            className={`overflow-clip w-full 
+               h-48
+            `}
           />
 
           <img
             src={person.profilePic ? person.profilePic : person.profilePic}
             alt="profile"
             onError={(e) => (e.target.src = profile)}
-            className={`absolute z-10 -bottom-12 rounded-full shadow-lg shadow-[rgba(0,0,0,0.25)] md:left-56 xs:left-28 left-36 md:w-32  w-20 h-20 `
-        }
+            className={`absolute z-10 -bottom-12 rounded-full shadow-lg shadow-[rgba(0,0,0,0.25)] md:left-56  left-32 md:w-32 md:h-32  w-20 h-20 `}
           />
         </div>
 
@@ -61,17 +57,17 @@ export default function ProfileCard({ toggle, person }) {
             </span>
             <span className="flex gap-1 items-center">
               {person?.worksAt || ""}
-
-              
             </span>
           </div>
 
           <hr className="w-full text-hr font-extrabold" />
 
-          <div className="flex gap-0.5 justify-between items-center w-full px-4">
+          <div className="flex flex-wrap justify-around md:justify-between items-center w-full px-4 gap-y-4">
+
+
             <div className="flex flex-col justify-center items-center">
               <span className="font-bold">
-                {person.followers?.length ? person.followers?.length :0}
+                {person.followers?.length ? person.followers?.length : 0}
               </span>
               <span className="text-gray-400">Followers</span>
             </div>
@@ -80,8 +76,7 @@ export default function ProfileCard({ toggle, person }) {
 
             <div className="flex flex-col justify-center items-center">
               <span className="font-bold">
-                {person.following?.length
-                  ? person.following?.length : 0}
+                {person.following?.length ? person.following?.length : 0}
               </span>
               <span className="text-gray-400">Following</span>
             </div>
@@ -91,9 +86,7 @@ export default function ProfileCard({ toggle, person }) {
                 <div className="border-l-2 border-hr h-14"></div>
                 <div className="flex flex-col justify-center items-center">
                   <span className="font-bold">
-                    {posts?.length > 0
-                      ? getPosts(person && person._id)
-                      : 0}
+                    {posts?.length > 0 ? getPosts(person && person._id) : 0}
                   </span>
                   <span className="text-gray-400">Posts</span>
                 </div>
@@ -102,8 +95,6 @@ export default function ProfileCard({ toggle, person }) {
           </div>
 
           <hr className="w-full text-hr" />
-
-          
         </div>
       </div>
     </div>
