@@ -37,6 +37,12 @@ export default function CommentsBlock({ id, user }) {
     });
   };
 
+  const handleEdit = (id) => {
+    const comment = comments.find(comment => comment._id === id );
+
+    setText(comment);
+  };
+
   const handleReplySubmit = (commentID, postID) => {
     dispatch(sendReply(commentID, postID, token, text2)).then(() => {
       dispatch(allComments(id, token));
@@ -111,12 +117,7 @@ export default function CommentsBlock({ id, user }) {
                   {comment.userID === user._id && (
                     <span
                       className="text-sm text-gray-500 font-semibold text-left w-full cursor-pointer hover:text-gray-600"
-                      onClick={() =>
-                        setActiveReplyCommentID(
-                          activeReplyCommentID === comment._id
-                            ? null
-                            : comment._id
-                        )
+                      onClick={()=>handleEdit(comment._id)
                       }
                     >
                       Edit

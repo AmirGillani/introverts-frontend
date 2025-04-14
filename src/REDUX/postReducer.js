@@ -176,7 +176,7 @@ export const userPosts = (id) => async (dispatch) => {
   dispatch(userPostRequest());
 
   try {
-    const response = await fetch(`http://localhost:5000/posts/userPosts/${id}`);
+    const response = await fetch(`https://introverts-backend.vercel.app/posts/userPosts/${id}`);
 
     const responseData = await response.json();
 
