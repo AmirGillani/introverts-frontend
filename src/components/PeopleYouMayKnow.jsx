@@ -45,7 +45,7 @@ export default function FollowersCard() {
                 />
                 <div className="text-center mb-3">
                   <p className="font-semibold text-sm">{peoples.firstName}</p>
-                  <p className="text-xs text-gray-500">@{peoples.username}</p>
+                  <p className="text-xs text-gray-500">@{peoples.username?.slice(0, 10)}</p>
                 </div>
 
                 {peoples.followers.includes(user._id) ? (
