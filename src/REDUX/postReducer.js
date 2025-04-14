@@ -211,7 +211,7 @@ export const likePost = (id, token) => async (dispatch) => {
   }
 };
 
-export const sendComment = (data, id, token) => async (dispatch) => {
+export const sendComment = (data, id, token,userID) => async (dispatch) => {
   dispatch(commentRequest());
 
   try {
@@ -219,7 +219,7 @@ export const sendComment = (data, id, token) => async (dispatch) => {
       `https://introverts-backend.vercel.app/posts/sendComment/${id}`,
       {
         method: "PUT",
-        body: JSON.stringify(data),
+        body: JSON.stringify({comment:data,userID:userID}),
         headers: {
           "Content-Type": "application/json",
           authorization: `Bearer ${token}`,

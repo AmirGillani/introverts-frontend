@@ -7,7 +7,7 @@ import Reply from "./Reply";
 import { useDispatch, useSelector } from "react-redux";
 import { sendComment, allComments, sendReply } from "../REDUX/postReducer";
 
-export default function CommentsBlock({ id ,user}) {
+export default function CommentsBlock({ id, user }) {
   const dispatch = useDispatch();
   const { token } = useSelector((state) => state.auth);
   const { comments, status } = useSelector((state) => state.posts);
@@ -31,7 +31,7 @@ export default function CommentsBlock({ id ,user}) {
 
   const submitComment = () => {
     const comment = { comment: text };
-    dispatch(sendComment(comment, id, token)).then(() => {
+    dispatch(sendComment(comment, id, token, user._id)).then(() => {
       dispatch(allComments(id, token));
       setText("");
     });
@@ -49,7 +49,11 @@ export default function CommentsBlock({ id ,user}) {
     <div>
       {/* Comment Input */}
       <div className="bg-white rounded-t-2xl p-3 flex w-full gap-1 relative z-10">
-        <img src={user.profilePic} alt="profile" className="w-12 h-12 rounded-full" />
+        <img
+          src={user.profilePic}
+          alt="profile"
+          className="w-12 h-12 rounded-full"
+        />
         <div className="w-[80%] px-2 flex gap-1 justify-center items-center">
           <input
             type="text"
@@ -60,7 +64,7 @@ export default function CommentsBlock({ id ,user}) {
             onChange={(e) => setText(e.target.value)}
           />
           {status === "loading" ? (
-            "Sending"
+            "Wait ..."
           ) : (
             <img
               src={share}
@@ -90,15 +94,49 @@ export default function CommentsBlock({ id ,user}) {
                 <span className="w-full bg-input-color p-1 rounded-lg outline-none">
                   {comment.comment}
                 </span>
-                <span
-                  className="text-sm text-gray-500 font-semibold text-left w-full cursor-pointer hover:text-gray-600"
-                  onClick={() =>
-                    setActiveReplyCommentID(
-                      activeReplyCommentID === comment._id ? null : comment._id
-                    )
-                  }
-                >
-                  Reply
+                <span className="flex w-[40%] self-start">
+                  <span
+                    className="text-sm text-gray-500 font-semibold text-left w-full cursor-pointer hover:text-gray-600"
+                    onClick={() =>
+                      setActiveReplyCommentID(
+                        activeReplyCommentID === comment._id
+                          ? null
+                          : comment._id
+                      )
+                    }
+                  >
+                    Reply
+                  </span>
+
+                  {comment.userID === user._id && (
+                    <span
+                      className="text-sm text-gray-500 font-semibold text-left w-full cursor-pointer hover:text-gray-600"
+                      onClick={() =>
+                        setActiveReplyCommentID(
+                          activeReplyCommentID === comment._id
+                            ? null
+                            : comment._id
+                        )
+                      }
+                    >
+                      Edit
+                    </span>
+                  )}
+
+                  {comment.userID === user._id && (
+                    <span
+                      className="text-sm text-gray-500 font-semibold text-left w-full cursor-pointer hover:text-gray-600"
+                      onClick={() =>
+                        setActiveReplyCommentID(
+                          activeReplyCommentID === comment._id
+                            ? null
+                            : comment._id
+                        )
+                      }
+                    >
+                      Delete
+                    </span>
+                  )}
                 </span>
               </div>
               <div className="w-full flex flex-col justify-center items-center">

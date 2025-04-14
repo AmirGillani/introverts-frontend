@@ -27,7 +27,7 @@ export default function NewsFeed({posts,user,token}) {
                 />
               ))
             ) : (
-              <h2 className="text-4xl text-gray-500 text-center">NO POSTS</h2>
+              <h2 className="text-4xl text-orange-500 text-center my-5">NO POSTS</h2>
             )}
     </div>
   );
