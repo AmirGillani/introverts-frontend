@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { createPost, timelinePosts } from "../REDUX/postReducer";
 
-export default function Input({ addPost, user, token }) {
+export default function Input({ user, token }) {
   const dispatch = useDispatch();
 
   const [description, setDescription] = useState("");
@@ -99,6 +99,8 @@ export default function Input({ addPost, user, token }) {
     dispatch(createPost(formData, token)).then(() => {
       dispatch(timelinePosts(token));
     });
+    setImg(null);
+    setVideo(null);
   }
 
   useEffect(() => {
