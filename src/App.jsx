@@ -10,12 +10,11 @@ import { useState } from "react";
 import EditProfileModal from "./components/EditProfileModal";
 import SharePost from "./components/SharePost";
 import { useSelector } from "react-redux";
-function App() {
 
-  const {authenticated} = useSelector(state=> state.auth);
+function App() {
+  const { authenticated } = useSelector((state) => state.auth);
 
   const [open, setOpen] = useState(false);
-
   const [open2, setOpen2] = useState(false);
 
   function toggle() {
@@ -38,21 +37,12 @@ function App() {
               <ProfileSideBar toggle={toggle} />
               <Routes>
                 <Route path="/" element={<Home content="Home Page" />} />
-                <Route
-                  path="/profile"
-                  element={<Profile content="Profile Page" toggle={toggle} />}
-                />
+                <Route path="/profile" element={<Profile content="Profile Page" toggle={toggle} />} />
               </Routes>
-              <Routes>
-                {/* <Route
-                  path="/profile"
-                  element={<Profile content="Profile Page" toggle={toggle} />}
-                /> */}
-              </Routes>
-
               <RightSideSideBar toggle2={toggle2} />
             </div>
-            {/* GLOWS */}
+
+            {/* GLOW EFFECTS */}
             <div className="absolute -top-6 right-0 w-[22rem] h-[14rem] rounded-[50%] bg-[#a6ddf0] blur-3xl"></div>
             <div className="absolute -left-6 top-52 w-[22rem] h-[14rem] rounded-[50%] bg-[#a6ddf0] blur-3xl"></div>
           </div>
@@ -63,6 +53,7 @@ function App() {
             <Route path="/" element={<Auth content="Login" />} />
           </Routes>
 
+          {/* GLOW EFFECTS */}
           <div className="absolute -top-6 right-0 w-[22rem] h-[14rem] rounded-[50%] bg-[#a6ddf0] blur-3xl"></div>
           <div className="absolute -left-6 top-52 w-[22rem] h-[14rem] rounded-[50%] bg-[#a6ddf0] blur-3xl"></div>
         </div>
