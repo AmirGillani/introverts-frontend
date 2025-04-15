@@ -1,18 +1,14 @@
 import React, { useRef, useEffect, useState } from "react";
-import profile from "../assets/img/profileImg.jpg";
 import share from "../assets/img/share.png";
-import like from "../assets/img/like.png";
-import notlike from "../assets/img/notlike.png";
 import Reply from "./Reply";
 import { useDispatch, useSelector } from "react-redux";
 import { sendComment,editComment,deleteComment ,allComments, sendReply } from "../REDUX/postReducer";
 
-export default function CommentsBlock({ id, user }) {
+export default function CommentsBlock({ id }) {
   const dispatch = useDispatch();
-  const { token } = useSelector((state) => state.auth);
+  const { token,user } = useSelector((state) => state.auth);
   const { comments, status } = useSelector((state) => state.posts);
 
-  const [likedIndex, setLikedIndex] = useState(null);
   const [activeReplyCommentID, setActiveReplyCommentID] = useState(null);
   const [activeCommentID, setActiveCommentID] = useState(null);
   const [text, setText] = useState("");
@@ -33,9 +29,7 @@ export default function CommentsBlock({ id, user }) {
     inputRef.current?.focus(); // optional: focus the input
   };
 
-  const handleLikeClick = (index) => {
-    setLikedIndex(likedIndex === index ? null : index);
-  };
+
 
   const handleEdit = (id) => {
 
@@ -192,24 +186,7 @@ export default function CommentsBlock({ id, user }) {
                   )}
                 </span>
               </div>
-              <div className="w-full flex flex-col justify-center items-center">
-                {likedIndex === index ? (
-                  <img
-                    src={like}
-                    alt="react"
-                    className="w-5 h-5 cursor-pointer"
-                    onClick={() => handleLikeClick(index)}
-                  />
-                ) : (
-                  <img
-                    src={notlike}
-                    alt="react"
-                    className="w-5 h-5 cursor-pointer"
-                    onClick={() => handleLikeClick(index)}
-                  />
-                )}
-                <span className="text-center text-sm text-gray-500">0</span>
-              </div>
+           
             </div>
 
             {/* REPLY SECTION */}

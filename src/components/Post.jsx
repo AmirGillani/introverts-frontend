@@ -4,20 +4,22 @@ import notlike from "../assets/img/notlike.png";
 import comment from "../assets/img/comment.png";
 import share from "../assets/img/share.png";
 import CommentsBlock from "./Comments";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { likePost } from "../REDUX/postReducer";
 
 export default function Post({
   name,
   description,
   type,
-  user,
   likes,
   img,
-  id,
-  token,
+  id
 }) {
+
   const dispatch = useDispatch();
+
+  const {token,user} = useSelector(state=>state.auth);
+
   const [isOpen, setIsOpen] = useState(false);
   const hasLiked = likes.includes(user._id);
   const [liked, setLiked] = useState(hasLiked);
