@@ -4,7 +4,7 @@ import ProfileCard from "./ProfileCard";
 import FollowersCard from "./FollowersCard";
 import MyProfile from "./MyProfile";
 import UserProfile from "./UserProfile";
-import { useLocation } from "react-router-dom";
+import { useLocation,useNavigate  } from "react-router-dom";
 import { search } from "../REDUX/postReducer";
 import { useDispatch } from "react-redux";
 
@@ -12,9 +12,12 @@ export default function Profile({ toggle }) {
 
   const dispatch = useDispatch();
 
+  const navigate = useNavigate()
+
   function handleSearch(query)
   {
-    dispatch(search(query))
+    dispatch(search(query));
+    navigate("/")
   }
 
   const [currentAddress, setCurrentAddress] = useState("/");
