@@ -11,7 +11,7 @@ export default function Posts() {
 
   const { user, token } = useSelector((state) => state.auth);
 
-  const { posts, status , added } = useSelector((state) => state.posts);
+  const { posts, status , added, results } = useSelector((state) => state.posts);
 
   useEffect(() => {
 
@@ -25,7 +25,7 @@ export default function Posts() {
   return (
     <div className="h-screen w-full flex flex-col  items-center overflow-auto">
       <Input  user={user} token={token} />
-      <NewsFeed posts={posts} token={token} status={status} user={user} />
+      <NewsFeed posts={posts} token={token} status={status} user={user} results={results} />
     </div>
   );
 }

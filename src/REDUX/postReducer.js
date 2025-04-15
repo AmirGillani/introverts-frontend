@@ -6,7 +6,9 @@ export const postsReducer = createSlice({
   initialState: {
     status: "",
     error: "",
+    trending:[],
     posts: [],
+    results:[],
     comments:[],
     personPosts:[],
     person:{},
@@ -124,6 +126,30 @@ export const postsReducer = createSlice({
       state.status = "failure";
       state.error = action.payload.message;
     },
+
+    searchRequest: (state) => {
+      state.status = "loading";
+    },
+    searchSuccess: (state, action) => {
+      state.status = "succeed";
+      state.results = action.payload.results;
+    },
+    searchFailure: (state, action) => {
+      state.status = "failure";
+      state.error = action.payload.message;
+    },
+
+    hashtagRequest: (state) => {
+      state.status = "loading";
+    },
+    hashtagSuccess: (state, action) => {
+      state.status = "succeed";
+      state.trending = action.payload.trending;
+    },
+    hashtagFailure: (state, action) => {
+      state.status = "failure";
+      state.error = action.payload.message;
+    },
   },
 });
 
@@ -159,6 +185,15 @@ export const {
   allCommentsRequest,
   allCommentsSuccess,
   allCommentsFailure,
+
+  searchRequest,
+  searchSuccess,
+  searchFailure,
+
+  hashtagRequest,
+  hashtagSuccess,
+  hashtagFailure,
+
 } = postsReducer.actions;
 
 export default postsReducer.reducer;
@@ -472,3 +507,55 @@ export const allComments = (id, token) => async (dispatch) => {
     dispatch(allCommentsFailure(error.message));
   }
 };
+
+export const search = (query) => async (dispatch) => {
+  
+  dispatch(searchRequest());
+
+  try {
+    const response = await fetch(
+      `https://introverts-backend.vercel.app/posts/search?q=${query}`
+    );
+
+    const responseData = await response.json();
+
+    if (!response.ok) {
+      dispatch(searchFailure({ message: responseData.message }));
+    } else {
+      dispatch(
+        searchSuccess({
+          results: responseData.results,
+        })
+      );
+    }
+  } catch (error) {
+    dispatch(searchFailure(error.message));
+  }
+};
+
+export const hashtags = () => async (dispatch) => {
+  
+  dispatch(hashtagRequest());
+
+  try {
+    const response = await fetch(
+      `https://introverts-backend.vercel.app/posts/hashtags`
+    );
+
+    const responseData = await response.json();
+
+    if (!response.ok) {
+      dispatch(hashtagFailure({ message: responseData.message }));
+    } else {
+      dispatch(
+        hashtagSuccess({
+          trending: responseData.trending,
+        })
+      );
+    }
+  } catch (error) {
+    dispatch(hashtagFailure(error.message));
+  }
+};
+
+
