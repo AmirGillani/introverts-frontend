@@ -42,7 +42,7 @@ export default function ProfileCard({ toggle }) {
             alt="cover"
             onError={(e) => (e.target.src = cover)}
             className={`overflow-clip w-full ${
-              currentAddress === "/profile" ? "h-48" : "h-36"
+              currentAddress === "/profile" ? "h-52" : "h-36"
             }`}
           />
 

@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from "react";
 import share from "../assets/img/share.png";
 import Reply from "./Reply";
 import { useDispatch, useSelector } from "react-redux";
-import { sendComment,editComment,deleteComment ,allComments, sendReply } from "../REDUX/postReducer";
+import { sendComment,editComment,editReply,deleteComment ,allComments, sendReply } from "../REDUX/postReducer";
 
 export default function CommentsBlock({ id }) {
   const dispatch = useDispatch();
@@ -14,7 +14,11 @@ export default function CommentsBlock({ id }) {
   const [text, setText] = useState("");
   const [text2, setText2] = useState("");
   const [text3, setText3] = useState("");
+  const [text4, setText4] = useState("");
   const [isEdit, setEdit] = useState(false);
+  const [isEdit2, setEdit2] = useState(false);
+  const [replyID, setReplyID] = useState("");
+  const [commentID, setCommentID] = useState("");
   const inputRef = useRef(null);
 
   useEffect(() => {
@@ -40,6 +44,17 @@ export default function CommentsBlock({ id }) {
    if(commentFound?.comment) setText3(commentFound.comment);
 
     setEdit(true);
+  };
+
+  const handleReplyEdit = (postID,commentID,replyID,reply) => {
+
+    
+
+setText4(reply);
+setReplyID(replyID);
+setCommentID(commentID);
+setEdit2(true);
+
   };
 
   const submitEdit = () => {
@@ -74,6 +89,13 @@ export default function CommentsBlock({ id }) {
       setActiveReplyCommentID(null); // Optional: hide input after sending
     });
   };
+
+  const handleEditReplySubmit= (postID,commentID,replyID,reply)=>{
+    dispatch(editReply(reply,postID, commentID,token, user._id,replyID)).then(() => {
+      dispatch(allComments(id, token));
+      setText4("");
+    });
+  }
 
   return (
     <div>
@@ -193,7 +215,30 @@ export default function CommentsBlock({ id }) {
             {activeReplyCommentID === comment._id && (
               <div>
                 {/* Reply Input */}
-                <div className="w-full flex gap-2 ml-16 mt-1">
+                {
+                  isEdit2 ? <div className="w-full flex gap-2 ml-16 mt-1">
+                  <img
+                    src={user.profilePic}
+                    alt="img"
+                    className="w-10 rounded-full h-10"
+                  />
+                  <div className="md:w-[60%] w-[40%] flex flex-col">
+                    <input
+                      type="text"
+                      className="bg-input-color outline-none p-1 rounded-lg my-3"
+                      placeholder="Reply.."
+                      value={text4}
+                      onChange={(e) => setText4(e.target.value)}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter" && text4.trim() !== "") {
+                          e.preventDefault();
+                          handleEditReplySubmit(id,commentID,replyID,text4);
+                        }
+                      }}
+                      enterKeyHint="send"
+                    />
+                  </div>
+                </div>:<div className="w-full flex gap-2 ml-16 mt-1">
                   <img
                     src={user.profilePic}
                     alt="img"
@@ -216,6 +261,7 @@ export default function CommentsBlock({ id }) {
                     />
                   </div>
                 </div>
+                }
 
                 {/* Replies */}
                 {comment.reply?.map((reply, replyIndex) => (
@@ -224,7 +270,12 @@ export default function CommentsBlock({ id }) {
                     img={reply.img}
                     name={reply.name}
                     reply={reply.text}
+                    id={reply._id}
+                    postID={id}
+                    commentID={comment._id}
+                    userID={reply.userID}
                     user={user}
+                    handleReplyEdit={handleReplyEdit}
                   />
                 ))}
               </div>

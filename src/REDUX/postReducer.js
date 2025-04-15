@@ -313,12 +313,77 @@ export const editComment = (data, postID,commentID,token, userID) => async (disp
   }
 };
 
+export const editReply = (data, postID,commentID,token, userID,replyID) => async (dispatch) => {
+  
+  dispatch(editCommentRequest());
+
+  try {
+    const response = await fetch(
+      `https://introverts-backend.vercel.app/posts/editReply/${postID}`,
+      {
+        method: "PUT",
+        body: JSON.stringify({reply:data,commentID:commentID,userID:userID,replyID:replyID}),
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    const responseData = await response.json();
+
+    if (!response.ok) {
+      dispatch(editCommentFailure({ message: responseData.message }));
+    } else {
+      dispatch(
+        editCommentSuccess({
+          message: responseData.message
+        })
+      );
+    }
+  } catch (error) {
+    dispatch(editCommentFailure(error.message));
+  }
+};
+
 export const deleteComment = (postID,commentID,token) => async (dispatch) => {
   dispatch(deleteCommentRequest());
 
   try {
     const response = await fetch(
       `https://introverts-backend.vercel.app/posts/deleteComment/${postID}/${commentID}`,
+      {
+        method: "DELETE",
+     
+        headers: {
+        
+          authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    const responseData = await response.json();
+
+    if (!response.ok) {
+      dispatch(deleteCommentFailure({ message: responseData.message }));
+    } else {
+      dispatch(
+        deleteCommentSuccess({
+          message: responseData.message
+        })
+      );
+    }
+  } catch (error) {
+    dispatch(deleteCommentFailure(error.message));
+  }
+};
+
+export const deleteReply = (postID,commentID,replyID,token) => async (dispatch) => {
+  dispatch(deleteCommentRequest());
+
+  try {
+    const response = await fetch(
+      `https://introverts-backend.vercel.app/posts/deleteReply/${postID}/${commentID}/${replyID}`,
       {
         method: "DELETE",
      
