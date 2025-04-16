@@ -5,7 +5,8 @@ import comment from "../assets/img/comment.png";
 import share from "../assets/img/share.png";
 import CommentsBlock from "./Comments";
 import { useDispatch, useSelector } from "react-redux";
-import { likePost } from "../REDUX/postReducer";
+import { likePost,deletePost,timelinePosts } from "../REDUX/postReducer";
+import { RiDeleteBin5Fill } from "react-icons/ri";
 
 export default function Post({
   name,
@@ -13,7 +14,8 @@ export default function Post({
   type,
   likes,
   img,
-  id
+  id,
+  userID
 }) {
 
   const dispatch = useDispatch();
@@ -73,7 +75,11 @@ export default function Post({
 
   return (
     <>
-      <div className="w-full h-auto flex flex-col gap-2 my-3 bg-card p-3 rounded-2xl relative">
+      <div className="w-full h-auto flex flex-col gap-2 my-3 bg-card p-3 rounded-2xl relative" onClick={()=>dispatch(deletePost(id,token)).then(()=>dispatch(timelinePosts(token)))}>
+        {
+          userID === user._id && <span ><RiDeleteBin5Fill className="text-[#f99827] cursor-pointer" size={20}/></span>
+        }
+        
         {/* Render based on post type */}
         {type === "image" && (
           <img

@@ -23,6 +23,7 @@ export default function MyPosts({posts,user,token}) {
               id={post._id}
               key={index}
               token={token}
+              userID={post.userID}
             />
           );
         })

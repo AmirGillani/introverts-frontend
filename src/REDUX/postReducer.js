@@ -151,6 +151,18 @@ export const postsReducer = createSlice({
       state.status = "failure";
       state.error = action.payload.message;
     },
+
+    deletePostRequest: (state) => {
+      state.status = "loading";
+    },
+    deletePostSuccess: (state, action) => {
+      state.status = "succeed";
+      state.message = action.payload.message;
+    },
+    deletePostFailure: (state, action) => {
+      state.status = "failure";
+      state.error = action.payload.message;
+    },
   },
 });
 
@@ -194,6 +206,10 @@ export const {
   hashtagRequest,
   hashtagSuccess,
   hashtagFailure,
+
+  deletePostRequest,
+  deletePostSuccess,
+  deletePostFailure,
 
 } = postsReducer.actions;
 
@@ -379,6 +395,38 @@ export const editReply = (data, postID,commentID,token, userID,replyID) => async
     }
   } catch (error) {
     dispatch(editCommentFailure(error.message));
+  }
+};
+
+export const deletePost = (postID,token) => async (dispatch) => {
+  dispatch(deletePostRequest());
+
+  try {
+    const response = await fetch(
+      `https://introverts-backend.vercel.app/posts/${postID}`,
+      {
+        method: "DELETE",
+     
+        headers: {
+        
+          authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    const responseData = await response.json();
+
+    if (!response.ok) {
+      dispatch(deletePostFailure({ message: responseData.message }));
+    } else {
+      dispatch(
+        deletePostSuccess({
+          message: responseData.message
+        })
+      );
+    }
+  } catch (error) {
+    dispatch(deletePostFailure(error.message));
   }
 };
 

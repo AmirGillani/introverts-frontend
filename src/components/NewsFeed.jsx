@@ -21,6 +21,7 @@ export default function NewsFeed({ posts, user, token,results,status }) {
             id={post._id}
             key={index}
             token={token}
+            userID={post.userID}
           />
         ))
       ) : posts.length > 0 ? (
@@ -35,6 +36,7 @@ export default function NewsFeed({ posts, user, token,results,status }) {
             id={post._id}
             key={index}
             token={token}
+            userID={post.userID}
           />
         ))
       ) : (
