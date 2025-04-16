@@ -5,6 +5,7 @@ export const postsReducer = createSlice({
 
   initialState: {
     status: "",
+    loading:"",
     error: "",
     trending:[],
     posts: [],
@@ -30,15 +31,15 @@ export const postsReducer = createSlice({
       state.error = action.payload.message;
     },
     timelinePostRequest: (state) => {
-      state.status = "loading";
+      state.loading = "loading";
     },
     timelinePostSuccess: (state, action) => {
-      state.status = "succeed";
+      state.loading = "succeed";
       state.posts = action.payload.posts;
       
     },
     timelinePostFailure: (state, action) => {
-      state.status = "failure";
+      state.loading = "failure";
       state.error = action.payload.message;
     },
     userPostRequest: (state) => {
