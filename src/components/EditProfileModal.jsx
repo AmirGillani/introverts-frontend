@@ -92,7 +92,7 @@ export default function Modal({ close }) {
   }
 
   return (
-    <div className="w-screen h-[100%] bg-black/80  inset-0 absolute z-20 flex justify-center items-start">
+    <div className="fixed inset-0 z-50 bg-black/80 flex justify-center items-center w-screen h-screen">
       <motion.div
         className="bg-white rounded-xl py-3 px-10 flex flex-col gap-2 md:mt-10 mt-20 justify-center items-center relative z-30"
         variants={modalVariants}
