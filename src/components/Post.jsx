@@ -5,8 +5,10 @@ import comment from "../assets/img/comment.png";
 import share from "../assets/img/share.png";
 import CommentsBlock from "./Comments";
 import { useDispatch, useSelector } from "react-redux";
-import { likePost,deletePost,timelinePosts } from "../REDUX/postReducer";
+import { likePost, deletePost, timelinePosts } from "../REDUX/postReducer";
 import { RiDeleteBin5Fill } from "react-icons/ri";
+import { FaPencilAlt } from "react-icons/fa";
+import EditPost from "./EditPost";
 
 export default function Post({
   name,
@@ -15,17 +17,17 @@ export default function Post({
   likes,
   img,
   id,
-  userID
+  userID,
 }) {
-
   const dispatch = useDispatch();
 
-  const {token,user} = useSelector(state=>state.auth);
+  const { token, user } = useSelector((state) => state.auth);
 
   const [isOpen, setIsOpen] = useState(false);
   const hasLiked = likes.includes(user._id);
   const [liked, setLiked] = useState(hasLiked);
   const [likesHook, setLikes] = useState(likes.length);
+  const [edit, setEdit] = useState(false);
 
   useEffect(() => {
     setLiked(likes.includes(user._id));
@@ -71,15 +73,38 @@ export default function Post({
       </span>
     </div>
   );
-  
 
   return (
     <>
-      <div className="w-full h-auto flex flex-col gap-2 my-3 bg-card p-3 rounded-2xl relative" onClick={()=>dispatch(deletePost(id,token)).then(()=>dispatch(timelinePosts(token)))}>
-        {
-          userID === user._id && <span ><RiDeleteBin5Fill className="text-[#f99827] cursor-pointer" size={20}/></span>
-        }
-        
+      {edit && (
+        <EditPost
+          open={() => setEdit(true)}
+          close={() => setEdit(false)}
+          id={id}
+          description={description}
+        />
+      )}
+      <div className="w-full h-auto flex flex-col gap-2 my-3 bg-card p-3 rounded-2xl relative">
+        {userID === user._id && (
+          <span className="flex">
+            <RiDeleteBin5Fill
+              className="text-[#f99827] cursor-pointer"
+              size={20}
+              onClick={() => {
+                if (window.confirm("Are you sure you want to delete this post?")) {
+                  dispatch(deletePost(id, token)).then(() => dispatch(timelinePosts(token)));
+                }
+              }}
+              
+            />
+            <FaPencilAlt
+              className="text-[#f99827] cursor-pointer ml-2"
+              size={20}
+              onClick={() => setEdit(true)}
+            />
+          </span>
+        )}
+
         {/* Render based on post type */}
         {type === "image" && (
           <img
@@ -97,11 +122,7 @@ export default function Post({
           />
         )}
 
-        {isOpen ? (
-          <CommentsBlock id={id} user={user} />
-        ) : (
-          DescriptionBlock
-        )}
+        {isOpen ? <CommentsBlock id={id} user={user} /> : DescriptionBlock}
 
         {ActionSection}
       </div>

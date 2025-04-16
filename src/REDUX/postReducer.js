@@ -398,6 +398,38 @@ export const editReply = (data, postID,commentID,token, userID,replyID) => async
   }
 };
 
+export const editPost = (data, postID,token) => async (dispatch) => {
+  
+  dispatch(editCommentRequest());
+
+  try {
+    const response = await fetch(
+      `https://introverts-backend.vercel.app/posts/${postID}`,
+      {
+        method: "PUT",
+        body: data,
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    const responseData = await response.json();
+
+    if (!response.ok) {
+      dispatch(editCommentFailure({ message: responseData.message }));
+    } else {
+      dispatch(
+        editCommentSuccess({
+          message: responseData.message
+        })
+      );
+    }
+  } catch (error) {
+    dispatch(editCommentFailure(error.message));
+  }
+};
+
 export const deletePost = (postID,token) => async (dispatch) => {
   dispatch(deletePostRequest());
 

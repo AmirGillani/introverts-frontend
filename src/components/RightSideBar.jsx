@@ -18,8 +18,8 @@ export default function RightSide({ toggle2 }) {
   }, [trending, dispatch]);
 
   return (
-    <div className="md:flex hidden flex-col gap-3 relative z-10 items-center w-[80%]">
-      <div className="flex justify-between items-center w-full mt-1">
+    <div className="md:flex hidden flex-col gap-3 relative  items-center z-2 w-[80%]">
+      <div className="flex justify-between items-center w-full mt-1 relative">
         <Link to={"/"}>
           <img src={home} alt="icon" className="w-6 h-6 cursor-pointer" />
         </Link>
@@ -45,7 +45,7 @@ export default function RightSide({ toggle2 }) {
       </div>
 
       <button
-        className="w-full bg-gradient-to-b from-[#f99827] to-[#f95f35] text-white  p-0.5 rounded-sm cursor-pointer hover:bg-gradient-to-b hover:from-white hover:to-white hover:border-orange hover:border-2 hover:text-orange py-2"
+        className="w-full bg-gradient-to-b from-[#f99827] to-[#f95f35] text-white  p-0.5 rounded-sm cursor-pointer hover:bg-gradient-to-b hover:from-white hover:to-white hover:border-orange hover:border-2 hover:text-orange py-2 relative"
         onClick={() => toggle2()}
       >
         Share
