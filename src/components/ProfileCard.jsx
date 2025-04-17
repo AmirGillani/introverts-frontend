@@ -28,7 +28,7 @@ export default function ProfileCard({ toggle }) {
     <Link
       to="/profile"
       className={`${
-        currentAddress === "/" ? "w-[100%]" : "w-[80%]"
+        currentAddress === "/" ? "w-[100%] p-2" : "md:w-[80%] w-[100%] p-2"
       }   md:h-[70%]  overflow-hidden`}
     >
       <div
@@ -52,8 +52,8 @@ export default function ProfileCard({ toggle }) {
             onError={(e) => (e.target.src = profile)}
             className={`absolute z-10 -bottom-12 rounded-full shadow-lg shadow-[rgba(0,0,0,0.25)] ${
               currentAddress === "/profile"
-                ? "w-28 h-28 md:left-60 left-24"
-                : "w-24 h-24 left-24"
+                ? "w-28 h-28 md:left-60 left-32"
+                : "w-24 h-24 left-32"
             }`}
           />
         </div>

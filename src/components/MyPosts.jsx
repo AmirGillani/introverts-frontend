@@ -8,7 +8,7 @@ export default function MyPosts({posts,user,token}) {
 
 
   return (
-    <div className="md:w-[80%] w-[100%] p-2 overflow-auto h-[45%] relative z-10">
+    <div className="md:w-[80%] w-[100%] p-2 overflow-auto md:h-[45%] relative z-10">
       
       {posts.length >0 
          ?  posts.map((post, index) => {

@@ -23,7 +23,7 @@ export default function ProfileCard({  person }) {
   return (
     <div
       className={`${
-        currentAddress === "/" ? "w-[100%]" : "w-[80%]"
+        currentAddress === "/" ? "w-[100%]" : "md:w-[80%] w-[100%]"
       }   md:h-[70%] h-[65vh]  overflow-hidden`}
     >
       <div
@@ -45,7 +45,7 @@ export default function ProfileCard({  person }) {
             src={person.profilePic ? person.profilePic : person.profilePic}
             alt="profile"
             onError={(e) => (e.target.src = profile)}
-            className={`absolute z-10 -bottom-12 rounded-full shadow-lg shadow-[rgba(0,0,0,0.25)] md:left-56  left-32 md:w-32 md:h-32  w-20 h-20 `}
+            className={`absolute z-10 -bottom-12 rounded-full shadow-lg shadow-[rgba(0,0,0,0.25)] md:left-56  left-36 md:w-32 md:h-32  w-24 h-24 `}
           />
         </div>
 
