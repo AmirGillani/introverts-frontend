@@ -1,6 +1,11 @@
 import Home from "./pages/Home";
 import { useEffect } from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate,
+} from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 import ProfileSideBar from "./components/ProfileSideBar";
 import RightSideSideBar from "./components/RightSideBar";
@@ -14,10 +19,8 @@ import EditProfileModal from "./components/EditProfileModal";
 import SharePost from "./components/SharePost";
 import { useSelector } from "react-redux";
 
-
 function App() {
-
-  const { authenticated,user } = useSelector((state) => state.auth);
+  const { authenticated, user } = useSelector((state) => state.auth);
 
   const [open, setOpen] = useState(false);
   const [open2, setOpen2] = useState(false);
@@ -25,7 +28,7 @@ function App() {
   const logout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
-    window.location.href="/";
+    window.location.href = "/";
   };
 
   // LOGOUT AUTOMATICALLY DEPENDING UPON TOKEN EXPIRY DATE
@@ -63,13 +66,10 @@ function App() {
     setOpen2(!open2);
   }
 
-
-
   return (
     <Router>
       {authenticated ? (
         <div>
-
           {/* CANT SEND NOTIFICATION IN SERVERLESS PLATFORM LIKE VERCEL */}
 
           {/* <NotificationComponent /> */}
@@ -81,8 +81,18 @@ function App() {
               <ProfileSideBar toggle={toggle} />
               <Routes>
                 <Route path="/" element={<Home content="Home Page" />} />
-                <Route path="/profile" element={<Profile content="Profile Page" toggle={toggle} />} />
-                <Route path="/user/:id" element={<UserProfiles content="Profile Page" toggle={toggle} />} />
+                <Route
+                  path="/profile"
+                  element={<Profile content="Profile Page" toggle={toggle} />}
+                />
+                <Route
+                  path="/user/:id"
+                  element={
+                    <UserProfiles content="Profile Page" toggle={toggle} />
+                  }
+                />
+
+                <Route path="*" element={<Navigate to="/" replace />} />
               </Routes>
               <RightSideSideBar toggle2={toggle2} />
             </div>
@@ -96,6 +106,8 @@ function App() {
         <div className="relative">
           <Routes>
             <Route path="/" element={<Auth content="Login" />} />
+
+            <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
 
           {/* GLOW EFFECTS */}

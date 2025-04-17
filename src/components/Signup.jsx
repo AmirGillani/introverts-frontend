@@ -17,7 +17,7 @@ export default function Signup({ toggle }) {
 
   const [img,setImg]= useState(null);
 
-  const { validationErrors } = useSelector((state) => state.auth);
+  const { validationErrors,status } = useSelector((state) => state.auth);
 
   const handleChange = (e) => {
     const name = e.target.name;
@@ -171,12 +171,21 @@ export default function Signup({ toggle }) {
               Login !!
             </span>
           </span>
-          <button
+          {
+            status === "loading" ? <button
+            className="self-center bg-gradient-to-b from-[#f99827] to-[#f95f35] text-white p-1 rounded-sm cursor-pointer hover:bg-gradient-to-b hover:from-white hover:to-white hover:border-orange hover:border-2 hover:text-orange w-24"
+            type="submit"
+            disabled={true}
+          >
+            Loading ...
+          </button> :<button
             className="self-center bg-gradient-to-b from-[#f99827] to-[#f95f35] text-white p-1 rounded-sm cursor-pointer hover:bg-gradient-to-b hover:from-white hover:to-white hover:border-orange hover:border-2 hover:text-orange w-24"
             type="submit"
           >
             Signup
           </button>
+          }
+          
         </form>
       </div>
     </div>

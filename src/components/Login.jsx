@@ -11,7 +11,7 @@ export default function Signup({ toggle }) {
     password: ""
   });
 
-  const { validationErrors } = useSelector((state) => state.auth);
+  const { validationErrors,status } = useSelector((state) => state.auth);
 
   const handleChange = (e) => {
     const name = e.target.name;
@@ -79,9 +79,14 @@ export default function Signup({ toggle }) {
             Signup !!
           </span>
         </span>
-        <button className="self-center bg-gradient-to-b from-[#f99827] to-[#f95f35] text-white p-1 rounded-sm cursor-pointer hover:bg-gradient-to-b hover:from-white hover:to-white hover:border-orange hover:border-2 hover:text-orange w-24" type="submit">
+        {
+          status === "loading" ?<button className="self-center bg-gradient-to-b from-[#f99827] to-[#f95f35] text-white p-1 rounded-sm cursor-pointer hover:bg-gradient-to-b hover:from-white hover:to-white hover:border-orange hover:border-2 hover:text-orange w-24" type="submit" disabled={true}>
+          Loading
+        </button>:<button className="self-center bg-gradient-to-b from-[#f99827] to-[#f95f35] text-white p-1 rounded-sm cursor-pointer hover:bg-gradient-to-b hover:from-white hover:to-white hover:border-orange hover:border-2 hover:text-orange w-24" type="submit">
           Login
         </button>
+        }
+        
         </form>
 
       </div>
