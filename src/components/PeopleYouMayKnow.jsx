@@ -34,7 +34,9 @@ export default function FollowersCard() {
         People You May Know
       </span>
 
-      <div className="flex flex-row justify-center items-center gap-4 overflow-x-auto pb-2">
+      <div className="flex flex-row items-center gap-4 overflow-x-auto pb-2 pl-4">
+
+
         {users.map((peoples, index) => {
           {
             return user._id !== peoples._id && (
