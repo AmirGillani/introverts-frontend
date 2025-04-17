@@ -4,7 +4,7 @@ import Post from "./Post";
 export default function NewsFeed({ posts, user, token,results,status }) {
   
   return (
-    <div className="w-[80%] relative z-10">
+    <div className="md:w-[80%] w-[100%] relative z-10">
       {status === "loading" ? (
         <div className="text-4xl font-bold text-center bg-gradient-to-r from-orange-400 to-orange-600 text-transparent bg-clip-text">
           Loading...

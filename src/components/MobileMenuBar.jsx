@@ -1,4 +1,4 @@
-import React from "react";
+import React ,{useState,useEffect} from "react";
 import home from "../assets/img/home.png";
 import notification from "../assets/img/noti.png";
 import { MdPerson } from "react-icons/md";
@@ -6,9 +6,32 @@ import { Link } from "react-router-dom";
 import FollowersCard from "./PeopleYouMayKnow";
 
 export default function MobileMenuBar() {
+
+    const [isVisible, setIsVisible] = useState(true);
+    
+      useEffect(() => {
+        // Function to check scroll position
+        const handleScroll = () => {
+          if (window.scrollY > 100) { // You can adjust the scroll value (100) as needed
+            setIsVisible(false);
+          } else {
+            setIsVisible(true);
+          }
+        };
+    
+        // Attach the scroll event listener
+        window.addEventListener('scroll', handleScroll);
+    
+        // Cleanup the event listener on component unmount
+        return () => {
+          window.removeEventListener('scroll', handleScroll);
+        };
+      }, []);
+
+ 
   return (
     <>
-      <div className="md:hidden flex justify-evenly items-center w-full mt-1 fixed top-0 left-0 right-0 z-20 bg-white p-2 shadow">
+      <div className="md:hidden flex justify-evenly items-center w-full  fixed top-0 left-0 right-0 z-20 bg-white p-2 shadow">
         <Link to="/">
           <img src={home} alt="icon" className="w-6 h-6 cursor-pointer" />
         </Link>
@@ -26,7 +49,10 @@ export default function MobileMenuBar() {
           Logout
         </button>
       </div>
-      <FollowersCard />
+      
+    {isVisible && <FollowersCard  /> }    
+      
+      
     </>
   );
 }

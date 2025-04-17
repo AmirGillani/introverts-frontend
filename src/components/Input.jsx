@@ -114,7 +114,7 @@ export default function Input({ user, token }) {
 
   return (
     <>
-      <div className="bg-white rounded-2xl p-3 flex w-[80%] justify-between relative z-10">
+      <div className="bg-white rounded-2xl p-3 flex md:w-[80%] w-[100%]  justify-between relative z-10">
         <Link to={"/profile"}>
           <img
             src={user ? user.profilePic : Profile}
