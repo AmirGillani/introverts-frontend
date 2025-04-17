@@ -29,7 +29,7 @@ export default function FollowersCard() {
 
 
   return (
-    <div className={`min-w-[360px] max-w-[370px] relative z-10 mb-1 rounded-2xl px-4 sm:hidden bg-white py-1 md:hidden block`}>
+    <div className={`min-w-[360px] max-w-[370px] relative z-10 mb-4 rounded-2xl px-4 sm:hidden bg-white py-1 md:hidden block`}>
       <span className="font-bold text-black text-left block mb-4 text-lg">
         People You May Know
       </span>
