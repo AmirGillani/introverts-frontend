@@ -13,11 +13,11 @@ import { useState } from "react";
 import EditProfileModal from "./components/EditProfileModal";
 import SharePost from "./components/SharePost";
 import { useSelector } from "react-redux";
-import NotificationComponent from "../src/components/Notification"
+
 
 function App() {
 
-  const { authenticated } = useSelector((state) => state.auth);
+  const { authenticated,user } = useSelector((state) => state.auth);
 
   const [open, setOpen] = useState(false);
   const [open2, setOpen2] = useState(false);
@@ -62,6 +62,8 @@ function App() {
   function toggle2() {
     setOpen2(!open2);
   }
+
+
 
   return (
     <Router>
