@@ -61,8 +61,9 @@ export default function ProfileCard({ toggle }) {
         <div className="bg-card flex flex-col gap-0.5 justify-center items-center p-3 rounded-b-2xl">
           <div className="mt-14 mb-6 flex flex-col justify-center items-center gap-0.5">
             <span className="font-black">
-              {user && user.firstName }
-              {user && user.lastName }
+               <span>{user && user.firstName }</span>
+               <span className="ml-2">{user && user.lastName }</span>
+              
             </span>
             <span className="flex gap-1 items-center">
               {user?.worksAt || ""}
