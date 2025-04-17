@@ -1,32 +1,13 @@
-import React ,{useState,useEffect} from "react";
+import React  from "react";
 import home from "../assets/img/home.png";
 import notification from "../assets/img/noti.png";
 import { MdPerson } from "react-icons/md";
 import { Link } from "react-router-dom";
-import FollowersCard from "./PeopleYouMayKnow";
+
 
 export default function MobileMenuBar() {
 
-    const [isVisible, setIsVisible] = useState(true);
-    
-      useEffect(() => {
-        // Function to check scroll position
-        const handleScroll = () => {
-          if (window.scrollY > 100) { // You can adjust the scroll value (100) as needed
-            setIsVisible(false);
-          } else {
-            setIsVisible(true);
-          }
-        };
-    
-        // Attach the scroll event listener
-        window.addEventListener('scroll', handleScroll);
-    
-        // Cleanup the event listener on component unmount
-        return () => {
-          window.removeEventListener('scroll', handleScroll);
-        };
-      }, []);
+
 
  
   return (
@@ -50,7 +31,7 @@ export default function MobileMenuBar() {
         </button>
       </div>
       
-    {isVisible && <FollowersCard  /> }    
+   
       
       
     </>

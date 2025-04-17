@@ -3,6 +3,7 @@ import Input from "./Input";
 import NewsFeed from "./NewsFeed";
 import { useDispatch, useSelector } from "react-redux";
 import { timelinePosts } from "../REDUX/postReducer";
+import PeopleYouMayKnow from "../components/PeopleYouMayKnow";
 
 export default function Posts() {
   const dispatch = useDispatch();
@@ -24,6 +25,7 @@ export default function Posts() {
 
   return (
     <div className="h-screen w-full flex flex-col  items-center overflow-auto">
+      <PeopleYouMayKnow />
       <Input  user={user} token={token} />
       <NewsFeed posts={posts} token={token} status={loading} user={user} results={results} />
     </div>

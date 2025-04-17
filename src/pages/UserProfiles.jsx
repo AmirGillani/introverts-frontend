@@ -29,7 +29,7 @@ export default function Profile({ toggle }) {
   }, [personPosts,person]);
 
   return (
-    <div className="flex flex-col items-center gap-2  md:h-[117vh] h-[110vh]   ">
+    <div className="flex flex-col items-center gap-2  md:h-[117vh]">
       <ProfileCard toggle={toggle} person={person} />
       <MyPosts posts={myPosts} user={personHook} />
     </div>

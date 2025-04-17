@@ -29,7 +29,7 @@ export default function ProfileCard({ toggle }) {
       to="/profile"
       className={`${
         currentAddress === "/" ? "w-[100%] p-2" : "md:w-[80%] w-[100%] p-2"
-      }   md:h-[70%]  overflow-hidden`}
+      }   md:h-[90%]  overflow-hidden`}
     >
       <div
         className={`rounded-3xl overflow-clip relative z-10 cursor-pointer ${
@@ -53,7 +53,7 @@ export default function ProfileCard({ toggle }) {
             className={`absolute z-10 -bottom-12 rounded-full shadow-lg shadow-[rgba(0,0,0,0.25)] ${
               currentAddress === "/profile"
                 ? "w-28 h-28 md:left-60 left-32"
-                : "w-24 h-24 left-32"
+                : "w-24 h-24 md:left-24 left-32"
             }`}
           />
         </div>

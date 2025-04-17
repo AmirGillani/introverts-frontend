@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllUsers, followUser, unFollowUser } from "../REDUX/authReducer";
 import {Link} from "react-router-dom";
 
-export default function FollowersCard({isVisible}) {
+export default function FollowersCard() {
   const dispatch = useDispatch();
   const { users, user, token, status } = useSelector((state) => state.auth);
 
@@ -29,7 +29,7 @@ export default function FollowersCard({isVisible}) {
 
 
   return (
-    <div className={`w-full relative z-10 mt-14 px-4 sm:hidden`}>
+    <div className={`min-w-[360px] max-w-[370px] relative z-10 mb-1 rounded-2xl px-4 sm:hidden bg-white py-1 md:hidden block`}>
       <span className="font-bold text-black text-left block mb-4 text-lg">
         People You May Know
       </span>
@@ -41,7 +41,7 @@ export default function FollowersCard({isVisible}) {
               <Link to={`/user/${peoples._id}`} key={index}>
                <div
                 key={index}
-                className="min-w-[160px] max-w-[180px] bg-white rounded-2xl shadow-md flex flex-col items-center p-4"
+                className="min-w-[90px] max-w-[110px] bg-white rounded-2xl shadow-md flex flex-col items-center p-4"
               >
                 <img
                   src={peoples.profilePic}
