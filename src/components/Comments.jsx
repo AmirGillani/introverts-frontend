@@ -1,6 +1,8 @@
 import React, { useRef, useEffect, useState } from "react";
 import share from "../assets/img/share.png";
 import Reply from "./Reply";
+import { Link } from "react-router-dom";
+
 import { useDispatch, useSelector } from "react-redux";
 import {
   sendComment,
@@ -140,11 +142,14 @@ export default function CommentsBlock({ id }) {
         {comments.map((comment) => (
           <div key={comment._id}>
             <div className="px-2 mt-0.5 grid md:grid-cols-[1fr_8fr_1fr] grid-cols-[1fr_5fr_1fr] gap-2 w-[90%] relative z-10">
+              <Link to={`/user/${comment.userID}`}>
               <img
                 src={comment.imgUrl}
                 alt="profile"
                 className="md:w-10 md:h-10 w-12 h-12 rounded-full"
               />
+              </Link>
+              
               <div className="w-full flex flex-col gap-1 justify-center items-center">
                 <span className="text-sm font-semibold text-left w-full">
                   {comment.name}

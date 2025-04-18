@@ -1,6 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteReply, allComments } from "../REDUX/postReducer";
+import { Link } from "react-router-dom";
 
 export default function Reply({
   img,
@@ -30,7 +31,9 @@ export default function Reply({
 
 
       <div className="w-full flex gap-2 ml-16 mt-1">
+      <Link to={`/user/${userID}`}>
         <img src={img} alt="img" className="w-10 rounded-full h-10" />
+        </Link>
         <div className="md:w-[60%] w-[40%] flex flex-col">
           <span className="text-black font-semibold">{name}</span>
           <span className="bg-input-color p-1 rounded-xl">{reply}</span>
