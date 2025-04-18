@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import cover from "../assets/img/cover.jpg";
 import profile from "../assets/img/user.png";
-import { MdModeEdit } from "react-icons/md";
+import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 export default function ProfileCard({  person }) {
@@ -65,21 +65,21 @@ export default function ProfileCard({  person }) {
           <div className="flex flex-wrap justify-around md:justify-between items-center w-full px-4 gap-y-4">
 
 
-            <div className="flex flex-col justify-center items-center">
+            <Link to={`/followers/${person._id}`} className="flex flex-col justify-center items-center">
               <span className="font-bold">
                 {person.followers?.length ? person.followers?.length : 0}
               </span>
               <span className="text-gray-400">Followers</span>
-            </div>
+            </Link>
 
             <div className="border-l-2 border-hr h-14"></div>
 
-            <div className="flex flex-col justify-center items-center">
+            <Link to={`/following/${person._id}`} className="flex flex-col justify-center items-center">
               <span className="font-bold">
                 {person.following?.length ? person.following?.length : 0}
               </span>
               <span className="text-gray-400">Following</span>
-            </div>
+            </Link>
 
             {currentAddress === "/profile" && (
               <>

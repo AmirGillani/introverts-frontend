@@ -19,6 +19,7 @@ import EditProfileModal from "./components/EditProfileModal";
 import SharePost from "./components/SharePost";
 import { useSelector } from "react-redux";
 import Users from "./pages/Users";
+import UserFollowers from "./pages/UserFollowers"
 
 function App() {
   const { authenticated, user } = useSelector((state) => state.auth);
@@ -89,13 +90,19 @@ function App() {
                 <Route
                   path="/user/:id"
                   element={
-                    <UserProfiles content="Profile Page" toggle={toggle} />
+                    <UserProfiles content="User Profile Page" toggle={toggle} />
                   }
                 />
                  <Route
                   path="/:text"
                   element={
-                    <Users content="Profile Page" />
+                    <Users content="Followers Page" />
+                  }
+                />
+                <Route
+                  path="/:text/:id"
+                  element={
+                    <UserFollowers content="User Followers Page" />
                   }
                 />
 
