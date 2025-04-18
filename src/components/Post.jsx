@@ -59,10 +59,10 @@ export default function Post({
         />
         <img src={share} alt="share" className="cursor-pointer" />
       </div>
-      <Link to={`/${id}`} className="flex">
-      <span>{likesHook} likes</span>
+      <span className="flex">
+      <Link to={`/${id}`}>{likesHook} likes</Link>
       <span className="ml-1">{`${comments.length} comments`}</span>
-      </Link>
+      </span>
       
     </>
   );
