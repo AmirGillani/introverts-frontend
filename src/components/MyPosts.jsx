@@ -24,6 +24,8 @@ export default function MyPosts({posts,user,token}) {
               key={index}
               token={token}
               userID={post.userID}
+              comments={post.comments}
+              
             />
           );
         })

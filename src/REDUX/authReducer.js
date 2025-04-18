@@ -25,6 +25,7 @@ export const authReducer = createSlice({
     error: "",
     authenticated: localStorage.getItem("user") ? true : false,
     validationErrors: [],
+    followers:[]
   },
 
   reducers: {
@@ -136,6 +137,7 @@ export const authReducer = createSlice({
     followUserSuccess: (state, action) => {
       state.status = "succeed";
       state.message = action.payload.message;
+      state.user = action.payload.user;
 
     },
     followUserFailure: (state, action) => {
@@ -145,11 +147,17 @@ export const authReducer = createSlice({
     unFollowUserSuccess: (state, action) => {
       state.status = "succeed";
       state.message = action.payload.message;
+      state.user = action.payload.user;
 
     },
     unFollowUserFailure: (state, action) => {
       state.status = "failure";
       state.error = action.payload.message;
+      
+    },
+    FetchFollowersSuccess: (state, action) => {
+      state.status = "succeed";
+      state.followers = action.payload.followers;
       
     },
   },
@@ -175,6 +183,7 @@ export const {
   followUserFailure,
   unFollowUserSuccess,
   unFollowUserFailure,
+  FetchFollowersSuccess
 } = authReducer.actions;
 
 export default authReducer.reducer;
@@ -297,6 +306,30 @@ export const getSingleUser = (id) => async (dispatch) => {
   }
 };
 
+export const fetchFollowers = (id,text) => async (dispatch) => {
+  dispatch(UserRequest());
+
+  try {
+    const response = await fetch(`https://introverts-backend.vercel.app/users/fetchFollowers/`,{
+      method:"PUT",
+      body:JSON.stringify({id,text}),
+      headers:{
+        "Content-Type":"application/json"
+      }
+    });
+
+    const responseData = await response.json();
+
+    if (!response.ok) {
+      dispatch(UserFailure({ message: responseData.message }));
+    } else {
+      dispatch(FetchFollowersSuccess({ followers: responseData.followers }));
+    }
+  } catch (error) {
+    dispatch(UserFailure(error.message));
+  }
+};
+
 export const followUser = (id, token) => async (dispatch) => {
   try {
     const response = await fetch(`https://introverts-backend.vercel.app/users/follow/${id}`, {
@@ -311,7 +344,7 @@ export const followUser = (id, token) => async (dispatch) => {
     if (!response.ok) {
       dispatch(followUserFailure({ message: responseData.message }));
     } else {
-      dispatch(followUserSuccess({ message: responseData.message }));
+      dispatch(followUserSuccess({ message: responseData.message, user:responseData.user }));
     }
   } catch (error) {
     dispatch(followUserFailure(error.message));
@@ -333,7 +366,7 @@ export const unFollowUser = (id, token) => async (dispatch) => {
     if (!response.ok) {
       dispatch(unFollowUserFailure({ message: responseData.message }));
     } else {
-      dispatch(unFollowUserSuccess({ message: responseData.message }));
+      dispatch(unFollowUserSuccess({ message: responseData.message,user:responseData.user }));
     }
   } catch (error) {
     dispatch(unFollowUserFailure(error.message));

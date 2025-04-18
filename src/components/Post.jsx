@@ -18,6 +18,7 @@ export default function Post({
   img,
   id,
   userID,
+  comments
 }) {
   const dispatch = useDispatch();
 
@@ -57,7 +58,11 @@ export default function Post({
         />
         <img src={share} alt="share" className="cursor-pointer" />
       </div>
+      <span className="flex">
       <span>{likesHook} likes</span>
+      <span className="ml-1">{`${comments.length} comments`}</span>
+      </span>
+      
     </>
   );
 
