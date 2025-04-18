@@ -10,15 +10,22 @@ export default function Users() {
   const { user, followers = [], status } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    if (user?._id && text) {
-      dispatch(fetchFollowers(user._id, text));
+
+    if(text !== "followers" && text !== "following" )
+    {
+      dispatch(fetchFollowers(user._id, "likes",text));
+    }else{
+      if (user?._id && text) {
+        dispatch(fetchFollowers(user._id, text));
+      }
     }
+    
   }, [user, dispatch, text]);
 
   return (
     <div className="relative z-20 px-4 py-6 min-h-[80vh]">
       <h2 className="text-3xl capitalize text-center font-semibold text-gray-800 mb-6">
-        {text}
+        {text !== "followers" && text !== "following" ?"Likes":text}
       </h2>
 
       {status === "loading" ? (

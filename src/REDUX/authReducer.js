@@ -306,13 +306,13 @@ export const getSingleUser = (id) => async (dispatch) => {
   }
 };
 
-export const fetchFollowers = (id,text) => async (dispatch) => {
+export const fetchFollowers = (id,text,postID) => async (dispatch) => {
   dispatch(UserRequest());
 
   try {
     const response = await fetch(`https://introverts-backend.vercel.app/users/fetchFollowers/`,{
       method:"PUT",
-      body:JSON.stringify({id,text}),
+      body:JSON.stringify({id,text,postID}),
       headers:{
         "Content-Type":"application/json"
       }

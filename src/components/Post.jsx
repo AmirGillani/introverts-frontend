@@ -9,6 +9,7 @@ import { likePost, deletePost, timelinePosts } from "../REDUX/postReducer";
 import { RiDeleteBin5Fill } from "react-icons/ri";
 import { FaPencilAlt } from "react-icons/fa";
 import EditPost from "./EditPost";
+import { Link } from "react-router-dom";
 
 export default function Post({
   name,
@@ -58,10 +59,10 @@ export default function Post({
         />
         <img src={share} alt="share" className="cursor-pointer" />
       </div>
-      <span className="flex">
+      <Link to={`/${id}`} className="flex">
       <span>{likesHook} likes</span>
       <span className="ml-1">{`${comments.length} comments`}</span>
-      </span>
+      </Link>
       
     </>
   );
